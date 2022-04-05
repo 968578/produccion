@@ -1,0 +1,120 @@
+.containerForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.containerHomeButton{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  
+}
+
+.containerHomeButton a{
+  color: black;
+  text-decoration: none;
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 30px;
+  width: 60px;
+  padding: 4px 0px 0px 0px ;
+}
+
+.containerHomeButton a:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+
+.containerTwoInputs{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+  
+}
+
+.containerTwoInputs div label{
+  font-size: 19px;
+  
+
+}
+
+.containerTwoInputs div label input{
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 25px;
+  
+
+}
+
+.containerTwoInputs div select{
+  font-size: 17px;
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 25px;
+
+}
+
+.errors{
+  color: red;
+  margin: 0;
+}
+
+.helps{
+  margin: 0;
+  width: min-content;
+}
+
+
+.itemIzquierdo{
+  
+  margin-right: 20px;
+}
+
+.botonForm{
+  font-size: 20px;
+  border: solid 1px black;
+  border-radius: 3px;
+  width: max-content;
+  padding: 0 7px 3px 7px;
+}
+
+.botonForm:hover{
+  box-shadow: 3px 3px 10px black;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.botonFormD{
+  font-size: 20px;
+  border: solid 1px gray;
+  border-radius: 3px;
+  width: max-content;
+  padding: 0 7px 3px 7px;
+  color : gray;
+}
+
+.ConfirmCreateLote{
+  border-radius: 3px;
+  width: 150px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 3px 2px 5px 3px ;
+  background-color: #34495e;
+  color: white;
+}
+
+.ErrorOpRepeat{
+  border-radius: 3px;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 3px 2px 5px 3px ;
+  background-color: #c0392b;
+  color: white;
+}

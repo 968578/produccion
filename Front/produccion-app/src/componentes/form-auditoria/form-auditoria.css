@@ -1,0 +1,22 @@
+.butonAddCampo{
+  border: 1px solid black;
+}
+
+.butonAddCampo:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+}
+
+.containerAddyRemove{
+  display: flex;
+  flex-direction: row;
+}
+
+.butonRemoveCampo{
+  border: 1px solid black;
+}
+
+.butonRemoveCampo:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+}

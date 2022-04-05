@@ -1,0 +1,92 @@
+.containerDetails{
+  
+  margin: 0 15% 0 15%;
+  border: solid black 1px;
+  margin-top: 20px;
+}
+
+.EditarEliminar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.containerEditar{
+  display: flex;
+  flex-direction: row;
+  border: solid black 1px;
+  align-items: center;
+  padding: 0 2px 3px;
+  border-radius: 3px;
+  margin: 8px 0  0 8px;
+}
+
+.containerEditar:hover{
+  box-shadow: 3px 3px 10px #2980b9;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+
+.containerEliminar{
+  display: flex;
+  flex-direction: row;
+  border: solid black 1px;
+  align-items: center;
+  padding: 0 3px 2px 3px;
+  border-radius: 3px;
+  margin: 8px 8px 0 0;
+}
+
+.containerEliminar:hover{
+  box-shadow: 3px 3px 10px #c0392b;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.X{
+  background-color: #c0392b;
+  height: 15px;
+  width: 15px;
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+
+.L{
+  background-color: #2980b9;
+  height: 15px;
+  width: 15px;
+  clip-path: polygon(0 75%, 75% 0, 100% 25%, 25% 100%, 0 100%);
+}
+
+.detailDuoTitle{
+  background-color: #bdc3c7;
+  margin: 5px 20px 0 20px;
+  border-radius: 3px;
+}
+
+.detailDuo{
+  margin: 10px 10px 10px 10px ;
+  border: 1px solid black;
+  padding: 2px 5px 5px 5px;
+  border-radius: 3px;
+
+
+}
+
+.containerAllDetails{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.confirmEliminado{
+  border-radius: 3px;
+  width: 150px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 3px 2px 5px 3px ;
+  background-color: #34495e;
+  color: white;
+}

@@ -1,0 +1,79 @@
+.navigation{
+  display: flex;
+  flex-direction: row;
+  padding-left: 10%;
+  padding-top: 30px;
+}
+
+.HomeButton{
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 30px;
+  width: 60px;
+  padding: 4px 0px 0px 0px ;
+}
+
+.HomeButton:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.containerBuscar{
+  display: flex;
+  flex-direction: row;
+  margin-left:80px ;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.containerBuscar input{
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+.containerBuscar div{
+  height: 23px;
+  border: 1px solid black;
+  border-radius: 3px ;
+  padding: 2px 3px 1px 5px;
+
+}
+
+.containerBuscar div:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.containerButtons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.containerButtons div{
+  border: solid black 1px;
+  border-radius: 3px;
+  height: 25px;
+  margin-right: 10px;
+  padding: 0 4px 0 4px;
+
+}
+
+
+.buttonLink a{
+  text-decoration: none;
+  color: black;
+  
+}
+
+.containerButtons div:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
