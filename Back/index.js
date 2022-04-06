@@ -12,7 +12,9 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 
-app.use('/', lotesController)
+app.use('/lotes', lotesController)
+
+//app.use('/auditorias')
 
 
 const port = 3000

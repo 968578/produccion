@@ -4,8 +4,9 @@ const pool = require('../db.conection')
 const router = Router()
 
 
-//solicitar lotes
-router.get('/get-lotes', (req,res)=>{
+//solicitar lotes    
+//  ruta /lotes
+router.get('/get', (req,res)=>{
   try {
 
     const query = 'SELECT * FROM lotes;'
@@ -27,8 +28,9 @@ router.get('/get-lotes', (req,res)=>{
 })
 
 
-// para agregar lotes
-router.post('/insert-lotes', (req,res)=>{
+// para agregar lotes   
+//  ruta /lotes
+router.post('/insert', (req,res)=>{
   const  { op, referencia, tejido, tipo_producto, unidades, sam, estado, confeccionista,
     fecha_asignacion, fecha_entrega, capacidad, ciclo, fecha_probable_entrega, eficiencia, 
       valor_unidad,  modulo, zona  } =  req.body
@@ -69,8 +71,9 @@ router.post('/insert-lotes', (req,res)=>{
 })
 
 
-// para actualizar los lotes
-router.put('/update-lote', (req, res)=>{
+// para actualizar los lotes 
+//  ruta /lotes
+router.put('/update', (req, res)=>{
 
   const  { op, referencia, tejido, tipo_producto, unidades, sam, estado, confeccionista,
     fecha_asignacion, fecha_entrega, capacidad, ciclo, fecha_probable_entrega, eficiencia, 
@@ -102,8 +105,9 @@ router.put('/update-lote', (req, res)=>{
 })
 
 
-// este nos sirve para eliminar los lotes
-router.delete('/delete-lote',(req,res)=>{
+// este nos sirve para eliminar los lotes  
+//  ruta /lotes
+router.delete('/delete',(req,res)=>{
   const {op} = req.query
   try {
     const query = `DELETE FROM lotes WHERE op = '${op}'`

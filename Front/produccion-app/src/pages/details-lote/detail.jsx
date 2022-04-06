@@ -21,7 +21,7 @@ const DetailsLote = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:3000/get-lotes')
+    axios.get('http://localhost:3000/lotes/get')
       .then(r => {
         // dispatch(loadAllLotes(r.data))
         // dispatch(loadShowLotes(r.data))
@@ -32,7 +32,7 @@ const DetailsLote = () => {
 
   const deleteLote = () => {
     const op = { op: dataLocal.op }
-    axios.delete('http://localhost:3000/delete-lote', { params: op })
+    axios.delete('http://localhost:3000/lotes/delete', { params: op })
       .then(r => {
         if (r.data === 'Eliminado con exito') {
           setconfirmDelete(r.data)
