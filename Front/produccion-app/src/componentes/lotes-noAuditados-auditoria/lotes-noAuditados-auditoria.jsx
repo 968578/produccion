@@ -18,7 +18,7 @@ const LotesNoAuditados=()=>{
   
 
   useEffect(()=>{
-    axios.get('http://localhost:3000/get-lotes')
+    axios.get('http://localhost:3000/lotes/get')
     .then(r =>{
       dispatch(loadAllLotes(r.data))
       dispatch(loadShowLotes(r.data))

@@ -190,7 +190,7 @@ const FormLotes=()=>{
       return
     }
     console.log(input)
-    axios.post('http://localhost:3000/insert-lotes', input)
+    axios.post('http://localhost:3000/lotes/insert', input)
     .then(r => {
       console.log(r)
       if(r.data === 'Agregado con exito'){

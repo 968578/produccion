@@ -20,3 +20,24 @@
   box-shadow: 3px 3px 10px black;
   cursor: pointer;
 }
+
+.buttonAuditoria{
+  border: 1px solid black;
+  width: 170px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+
+}
+
+.buttonAuditoriaNoActive{
+  border: 1px solid gray;
+  width: 170px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  color: gray;
+}
+
+.buttonAuditoria:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+}
