@@ -183,7 +183,7 @@ const EditarLote = (props) => {
       return
     }
     console.log(input)
-    axios.put('http://localhost:3000/update-lote', input)
+    axios.put('http://localhost:3000/lotes/update', input)
     .then(r => {
 
       if(r.data === 'Actualizado con exito'){

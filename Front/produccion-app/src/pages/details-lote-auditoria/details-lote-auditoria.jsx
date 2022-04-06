@@ -175,7 +175,7 @@ const DetailsLoteAuditoria = () => {
       {
         confirmDelete && <p className="confirmEliminado">{confirmDelete}</p>
       }
-      <FormAuditoria/>
+      <FormAuditoria data={dataLocal} />
     </div>
   )
 }

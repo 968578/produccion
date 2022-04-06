@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 
+import axios from 'axios'
+
 import './form-auditoria.css'
 
 
-const FormAuditoria = () => {
+const FormAuditoria = (props) => {
   
   const [countFault, setCountFault] = useState([])
   const [countMissing, setCountMissing] = useState([]) 
@@ -20,7 +22,8 @@ const FormAuditoria = () => {
     no_conformidades:[],
     segundas:'',
     faltantes:[],
-    primera:'',
+    faltantesTotal:'',
+    primeras:'',
     cobros:{
       descripcion_cobros:'',
       cantidad_cobros:'',
@@ -39,13 +42,36 @@ const FormAuditoria = () => {
     setCountFault([...countActual])
 
     let arrayNoConformidades = input.no_conformidades
-    arrayNoConformidades.pop()
-    setInput({...input, no_conformidades: arrayNoConformidades,
-                segundas: arrayNoConformidades.length > 1 ? arrayNoConformidades.reduce((acc,b)=>{
-                  acc = acc +Number(b.cantidad)
-                  return acc
-                }, 0 ) :
-                arrayNoConformidades[0].cantidad })
+    if(countActual.length + 1 === arrayNoConformidades.length){
+      arrayNoConformidades.pop()
+
+    }
+    if(arrayNoConformidades[0] != undefined && Number(arrayNoConformidades[0].cantidad != NaN )){
+      const segundas = arrayNoConformidades.length > 1 ? arrayNoConformidades.reduce((acc,b)=>{
+        acc = acc +Number(b?.cantidad)
+        return acc
+      }, 0 ) :
+      arrayNoConformidades.length === 1 ? Number(arrayNoConformidades[0].cantidad) : '';
+      
+      const faltantesTotal = input.faltantesTotal === '' ? 0 : input.faltantesTotal;
+      const primeras = Number(props.data.unidades) - (Number(segundas) + faltantesTotal)
+  
+      return setInput({...input, no_conformidades: arrayNoConformidades,
+                  segundas,
+                  primeras})
+    }else{
+      const segundas = ''
+      
+      const faltantesTotal = input.faltantesTotal === '' ? 0 : input.faltantesTotal;
+      const primeras = Number(props.data.unidades) - (Number(segundas) + faltantesTotal)
+  
+      return setInput({...input, no_conformidades: arrayNoConformidades,
+                  segundas,
+                  primeras})
+    }
+
+
+
   }
 
   const addMissing=()=>{
@@ -59,18 +85,41 @@ const FormAuditoria = () => {
     setCountMissing([...countActual])
 
     let arrayFaltantes = input.faltantes
-    arrayFaltantes.pop()
-    setInput({...input, faltantes: arrayFaltantes})
-  }
 
-
-  const submitAuditoria=(e)=>{
-    if(!activeButon){
-      return
+    if(countActual.length + 1 === arrayFaltantes.length){
+      arrayFaltantes.pop()
     }
-    e.preventDefault()
-    console.log(input)
+    if(arrayFaltantes[0] != undefined && Number(arrayFaltantes[0].cantidad) != NaN){
+      const faltantesTotal = arrayFaltantes.length > 1 ? arrayFaltantes.reduce((acc, b)=>{
+        acc = acc + Number(b?.cantidad)
+        return acc
+      },0 ) :
+      arrayFaltantes.length === 1 ?   Number(arrayFaltantes[0].cantidad) : '';
+  
+      const segundas =  input.segundas === '' ? 0 : input.segundas;
+  
+      const primeras = Number(props.data.unidades) -(Number(faltantesTotal) + segundas)
+      
+      setInput({...input, faltantes: arrayFaltantes,
+                  faltantesTotal,
+                  primeras })
+
+    }else{
+      const faltantesTotal = ''
+
+      const segundas =  input.segundas === '' ? 0 : input.segundas;
+      const primeras = Number(props.data.unidades) -(Number(faltantesTotal) + segundas)
+      
+      setInput({...input, faltantes: arrayFaltantes,
+                  faltantesTotal,
+                  primeras })
+
+    }
+
   }
+
+
+
 
   const changeInputNoconformidades=(e)=>{
 
@@ -96,12 +145,24 @@ const FormAuditoria = () => {
       let newCantidad ={}
       newCantidad[name.slice(0,8)] = value
       arrayNoConformidades[name.slice(8)] = {...arrayNoConformidades[name.slice(8)], ...newCantidad}
+
+      const segundas = arrayNoConformidades.length > 1 ? arrayNoConformidades.reduce((acc,b)=>{
+        if(Number(b?.cantidad)){
+          acc = acc + Number(b.cantidad)
+        }else{
+          acc = acc +0
+        }
+        return acc
+      }, 0 ) :
+      arrayNoConformidades.length === 1 ?  Number(arrayNoConformidades[0].cantidad) : '';
+
+      const faltantesTotal = input.faltantesTotal === '' ? 0 : input.faltantesTotal
+      const primeras = Number(props.data.unidades) - (Number(segundas) + faltantesTotal)
+
       return setInput({...input, no_conformidades:[...arrayNoConformidades], 
-        segundas: arrayNoConformidades.length > 1 ? arrayNoConformidades.reduce((acc,b)=>{
-          acc = acc +Number(b.cantidad)
-          return acc
-        }, 0 ) :
-        arrayNoConformidades[0].cantidad})
+        segundas,
+        primeras})
+
     }
   }
 
@@ -128,7 +189,24 @@ const FormAuditoria = () => {
       let newCantidad ={}
       newCantidad[name.slice(0,8)] = value
       arrayFaltantes[name.slice(8)] = {...arrayFaltantes[name.slice(8)], ...newCantidad}
-      return setInput({...input, faltantes:[...arrayFaltantes]})
+      const faltantesTotal = arrayFaltantes.length > 1 ? arrayFaltantes.reduce((acc, b)=>{
+        if(Number(b?.cantidad)){
+          acc = acc+ Number(b.cantidad)
+        }else{
+          acc = acc + 0
+        }
+        return acc
+      },0):
+        arrayFaltantes.length === 1 ?  Number(arrayFaltantes[0].cantidad) : '';
+
+      console.log(faltantesTotal)
+      const segundas = input.segundas === '' ? 0 : input.segundas
+      const primeras = Number(props.data.unidades) - (Number(faltantesTotal) + segundas)
+
+      return setInput({...input, faltantes:[...arrayFaltantes],
+        faltantesTotal,
+        primeras
+        })
     }
   }
 
@@ -216,11 +294,27 @@ const FormAuditoria = () => {
 
   }
 
+  useEffect(()=>{
+    if(props.data.unidades !== undefined){
+      setInput({...input, primeras:Number(props.data.unidades) })
+    }
+  },[props])
+
+  const submitAuditoria=()=>{
+    if(!activeButon){
+      return
+    }
+
+    axios.post('http://localhost:3000/auditorias/insert', input)
+    .then(r => console.log(r.data))
+  }
+
+
   return (
     <div>
       <h2>Formulario Auditorias</h2>
-      <div>
-        <form >
+      <div className="containerFormAuditoria">
+        <form  >
 
           <div className="containerTwoInputs">
             <div>
@@ -310,7 +404,7 @@ const FormAuditoria = () => {
             input.segundas !== ''  && 
             <div className="containerTwoInputs">
               <div>
-                <label >Segundas Cantidad</label> <br /> <p>{input.segundas}</p>
+                <label >Segundas Total</label> <br /> <p>{input.segundas}</p>
               </div>
             </div>
           }
@@ -349,12 +443,22 @@ const FormAuditoria = () => {
             )
           }
 
-
-          <div>
-            <label >Primera<br />
-              <div>Resultado de unidades totales menos faltantes y segundas</div>
-            </label>
-          </div>
+          {
+            input.faltantesTotal !== ''  && 
+            <div className="containerTwoInputs">
+              <div>
+                <label >Faltantes Total</label> <br /> <p>{input.faltantesTotal}</p>
+              </div>
+            </div>
+          }
+          {
+            input.primeras !== "" &&
+            <div>
+              <div >Primeras Total</div >
+                <div>{input.primeras}</div>
+            </div>
+          }
+          
 
           <h2>Cobros</h2>
           <div className="containerTwoInputs">
