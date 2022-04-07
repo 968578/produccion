@@ -9,6 +9,10 @@ const FormAuditoria = (props) => {
   
   const [countFault, setCountFault] = useState([])
   const [countMissing, setCountMissing] = useState([]) 
+  const [countMedidas, setCountMedidas] = useState({
+    superior:[],
+    inferior:[]
+  })
   const [activeButon, setActiveButon] = useState(false)
 
   const [input, setInput]= useState({
@@ -24,6 +28,7 @@ const FormAuditoria = (props) => {
     faltantes:[],
     faltantesTotal:'',
     primeras:'',
+    medidas:[],
     cobros:{
       descripcion_cobros:'',
       cantidad_cobros:'',
@@ -70,13 +75,38 @@ const FormAuditoria = (props) => {
                   primeras})
     }
 
-
-
   }
 
   const addMissing=()=>{
     setCountMissing([...countMissing, 1])
     
+  }
+
+  const addMedidasSuperiores=()=>{
+    if(countMedidas.superior.length === 0){
+      setCountMedidas({
+        superior:[ 1],
+        inferior:[]                                                                                                                                      
+      })
+    }
+    
+  }
+
+  const addMedidasInfeiores=()=>{
+    if(countMedidas.inferior.length === 0){
+      setCountMedidas({
+        superior:[],
+        inferior:[1]
+      })
+    }
+  }
+
+  const removeMedidas=()=>{
+
+    setCountMedidas({
+      superior:[],
+      inferior:[]
+    })
   }
 
   const removeMissing=()=>{
@@ -210,6 +240,30 @@ const FormAuditoria = (props) => {
     }
   }
 
+// esta funcion nos sirve para controlar los inputs de las medidas.
+  const changeInputMedidas=(e)=>{
+
+    const {name, value} = e.target
+    let arrayMedidas= input.medidas
+    // console.log(name.slice(0,5))
+    if(name.slice(0,5)=== 'pecho'){
+
+      let newMedida = {
+        tipo: name.slice(0,5),
+        talla: name.slice(5),
+        medida: value
+      }
+      console.log(newMedida)
+
+      console.log(name.slice(5))
+    }
+
+
+
+
+    }
+
+
   const changeInput=(e)=>{
 
     const {name, value} = e.target
@@ -305,8 +359,10 @@ const FormAuditoria = (props) => {
       return
     }
 
-    axios.post('http://localhost:3000/auditorias/insert', input)
-    .then(r => console.log(r.data))
+    console.log(input)
+
+    // axios.post('http://localhost:3000/auditorias/insert', input)
+    // .then(r => console.log(r.data))
   }
 
 
@@ -458,7 +514,323 @@ const FormAuditoria = (props) => {
                 <div>{input.primeras}</div>
             </div>
           }
-          
+
+          <h2>Medidas</h2>
+          <div className="containerAddyRemove">
+            <div onClick={addMedidasSuperiores} className="butonAddCampo" >Agregar campo superior</div>
+            <div onClick={addMedidasInfeiores} className="butonAddCampo" >Agregar campo inferior</div>
+            <div onClick={removeMedidas} className="butonRemoveCampo" >Eliminar campo</div>
+          </div>
+          {
+            countMedidas.superior.length > 0 && countMedidas.superior.map((e,i)=>
+            <div key={i}>
+
+              <p>Medidas de Prendas Superiores</p>
+              <div  className='containerFormSuperiores' >
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Tallas</div>
+                  <div className="titleTalla">XXS</div>
+                  <div className="titleTalla">XS</div>
+                  <div className="titleTalla">S</div>
+                  <div className="titleTalla">M</div>
+                  <div className="titleTalla">L</div>
+                  <div className="titleTalla">XL</div>
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Pecho</div>
+                  <input onChange={changeInputMedidas} name="pechoXXS" type="number" />
+                  <input name="pechoXS" type="text" />
+                  <input name="pechoS" type="text" />
+                  <input name="pechoM" type="text" />
+                  <input name="pechoL" type="text" />
+                  <input name="pechoXL" type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Sisa</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Ruedo</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Largo Frente</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Largo Costado</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Largo Manga</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Cuello</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Puño</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowSuperiores">
+                  <div className="titleFila">Largo Costado Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+                
+              </div>
+              <label >Otro: <textarea type="text" /></label>
+
+            </div>
+
+            )
+          }
+
+          {
+            countMedidas.inferior.length > 0 && countMedidas.inferior.map((e,i)=>
+                          <div key={i}>
+
+              <p>Medidas de Prendas Inferiores</p>
+              <div  className='containerFormInferiores' >
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Tallas</div>
+                  <div className="titleTalla">4</div>
+                  <div className="titleTalla">6</div>
+                  <div className="titleTalla">8</div>
+                  <div className="titleTalla">10</div>
+                  <div className="titleTalla">12</div>
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Ruedo</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Cintura</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Cadera</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Pierna</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Rodilla</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Bota</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Largo Costado</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Entrepierna</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Tiro Delantero</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Tiro Posterior</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+                
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Cintura Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Cadera Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Pierna Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Rodilla Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Bota Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Largo Costado Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Entrepierna Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Tiro Delantero Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+
+                <div className="containerRowInferiores">
+                  <div className="titleFila">Tiro Posterior Desp Lava</div>
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                  <input type="text" />
+                </div>
+              </div>
+              <label >Otro: <textarea type="text" /></label>
+
+            </div>
+            )
+          }
+
 
           <h2>Cobros</h2>
           <div className="containerTwoInputs">

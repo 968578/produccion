@@ -39,3 +39,54 @@
   cursor: pointer;
   transition: 0.3s;
 }
+
+.containerFormSuperiores{
+  display: grid;
+  /* grid-template-rows: 1fr ; */
+  /* grid-template-rows: 1fr 1fr 1fr; */
+  
+
+}
+
+.containerRowSuperiores{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr ; 
+  gap: 10px;
+  align-items: center;
+  
+}
+
+.containerRowSuperiores input{
+  width: 70px;
+}
+
+.containerRowSuperiores div{
+  display: flex;
+  justify-content: center;
+  
+}
+
+.titleFila{
+  border-bottom: 1px solid black;
+}
+
+.titleTalla{
+  width: 70px;
+}
+
+.containerFormInferiores{
+  display: grid;
+
+}
+
+.containerRowInferiores{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr  ; 
+  gap: 10px;
+  align-items: center;
+
+}
+
+.containerRowInferiores input{
+  width: 70px;
+}
