@@ -28,6 +28,42 @@ router.get('/get', (req,res)=>{
 })
 
 
+
+//  para solicitar lotes por op
+//  ruta /lotes
+router.get('/op', (req,res)=>{
+
+  
+  const {op} = req.query
+  
+  const query = `SELECT * FROM lotes AS l
+    INNER JOIN auditorias AS a ON l.op = a.op 
+    INNER JOIN medidas AS m ON l.op = m.op 
+    INNER JOIN no_conformidades AS n ON l.op = n.op 
+    INNER JOIN faltantes AS f ON l.op = f.op 
+    INNER JOIN cobros AS c ON l.op = c.op
+    WHERE l.op ='${op}' ;`
+
+
+  try {
+
+    pool.getConnection((err, conn)=>{
+      if(err) throw err
+
+      conn.query(query, (error, results)=>{
+        
+        if(error) throw error
+        res.json(results)
+        conn.release()
+      })
+    })
+    
+
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 // para agregar lotes   
 //  ruta /lotes
 router.post('/insert', (req,res)=>{

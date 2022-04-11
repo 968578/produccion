@@ -21,6 +21,9 @@ const DetailsLote = () => {
       // dispatch(loadShowLotes(r.data))
       setDataLocal(...r.data.filter((e) => e.op === params.op));
     });
+    const op = {op: params.op}
+    axios.get("http://localhost:3000/lotes/op", {params:op })
+    .then(r =>  console.log(r.data))
   }, []);
 
   const deleteLote = () => {

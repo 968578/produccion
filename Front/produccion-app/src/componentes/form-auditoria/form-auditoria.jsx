@@ -801,7 +801,10 @@ const FormAuditoria = (props) => {
 
   useEffect(()=>{
     if(props.data.unidades !== undefined){
-      setInput({...input, primeras:Number(props.data.unidades) })
+      setInput({...input, 
+        primeras:Number(props.data.unidades),
+        op: props.data.op
+      })
     }
   },[props])
 
@@ -809,12 +812,13 @@ const FormAuditoria = (props) => {
     if(!activeButon){
       return
     }
-
     console.log(input)
 
-    // axios.post('http://localhost:3000/auditorias/insert', input)
-    // .then(r => console.log(r.data))
+    axios.post('http://localhost:3000/auditorias/insert', input)
+    .then(r => console.log(r.data))
   }
+
+  // console.log(props)
 
 
   return (
