@@ -40,137 +40,199 @@ const DetailsLoteAuditoria = () => {
 
   return (
     <div>
-      <div className='containerHomeButton'>
-        <Link to='/Home-Auditoria' className='HomeFormLote'>Home</Link>
+      <div className="containerHomeButton">
+        <Link to="/" className="HomeFormLote">
+          Home
+        </Link>
       </div>
 
       <div className="containerDetails">
-
         <div className="EditarEliminar">
           <div onClick={AuditarLote} className="containerEditar">
-            <div >Auditar</div>
+            <div>Auditar</div>
             <div className="L"></div>
           </div>
         </div>
 
-        <div className="detailDuoTitle">
-          <div>OP</div>
-          <div>{dataLocal.op}</div>
-        </div>
+        <div >
 
-        <div className="containerAllDetails">
-          <div className="containerStart">
-
+          <div className="detailTitle">
             <div className="detailDuo">
-              <div>Fecha de Asignacion</div>
-              <div>{dataLocal.fecha_asignacion}</div>
+              <div>OP</div>
+              <div>{dataLocal.op}</div>
             </div>
-
-            <div className="detailDuo">
-              <div>Fecha de Entrega</div>
-              <div>{dataLocal.fecha_entrega}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Fecha Probable de Entrega</div>
-              <div>{dataLocal.fecha_probable_entrega}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Tipo Producto</div>
-              <div>{dataLocal.tipo_producto}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Unidades</div>
-              <div>{dataLocal.unidades}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Valor Unidad</div>
-              <div>{new Intl.NumberFormat().format(dataLocal.valor_unidad)}$</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Valor Total</div>
-              <div>{new Intl.NumberFormat().format(dataLocal.unidades * dataLocal.valor_unidad)}$</div>
-            </div>
-
-          </div>
-
-          <div className="containerMedio">
-            <div className="detailDuo">
-              <div>Confeccionista</div>
-              <div>{dataLocal.confeccionista}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Estado</div>
-              <div>{dataLocal.estado}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Auditado</div>
-              <div>{dataLocal.auditado == true ? 'Si' : 'No'}</div>
-            </div>
-
             <div className="detailDuo">
               <div>Referencia</div>
               <div>{dataLocal.referencia}</div>
             </div>
-
             <div className="detailDuo">
-              <div>Tejido</div>
-              <div>{dataLocal.tejido}</div>
+              <div>Confeccionista</div>
+              <div>{dataLocal.confeccionista}</div>
+            </div>
+          </div>
+
+          <div className="containerAllDetails">
+            <div className="containerLeft">
+              <div className="containerStart">
+
+                <div className="detailDuo">
+                  <div >Fecha de Asignacion</div>
+                  <div>{dataLocal.fecha_asignacion}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Fecha de Entrega</div>
+                  <div>{dataLocal.fecha_entrega}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Fecha Probable de Entrega</div>
+                  <div>{dataLocal.fecha_probable_entrega}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Estado</div>
+                  <div>{dataLocal.estado}</div>
+                </div>
+              </div>
+                
+
+              <div className="containerStart">
+                <div className="detailDuo">
+                  <div>Tipo Producto</div>
+                  <div>{dataLocal.tipo_producto}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Unidades</div>
+                  <div>{dataLocal.unidades}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Valor unidad</div>
+                  <div>{new Intl.NumberFormat().format(dataLocal.valor_unidad)}$</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Valor Total</div>
+                  <div>{new Intl.NumberFormat().format(dataLocal.unidades * dataLocal.valor_unidad)}$</div>
+                </div>
+              </div>
+
+              <div className="containerStart">
+                <div className="detailDuo">
+                  <div>Teido</div>
+                  <div>{dataLocal.tejido}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Zona</div>
+                  <div>{dataLocal.zona}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Capacidad</div>
+                  <div>{dataLocal.capacidad}</div>
+                </div>
+
+                <div className="detailDuo">
+                  <div>Ciclo</div>
+                  <div>{dataLocal.ciclo}</div>
+                </div>
+
+              </div>
+
+              <div className=" containerAuditoria">
+                <div className="auditoriaLeft">
+                  <div >
+                  <div>Auditoria</div>
+                    <div className="cabeceroAuditoria">
+                      <div>Fecha Auditoria: feb, 20 , 2022</div>
+                      <div>Auditor: Omar Echavarria</div>
+                      <div>Unidades Muestra: 10</div>
+                      <div>Muestra fisica: si</div>
+                      <div>Colaboradores Karibik: 10</div>
+                      <div>Tipo de revision: premuestra</div>
+                      <div className="composicionAuditoria">composicion: 100% algodon, 10% poliester, 35% plastico</div>
+                    </div>
+                  </div>
+
+                  <div >
+                    <div>No Conformidades</div>
+                    <div className="noConformidades">
+                      <div>tela: 3</div>
+                      <div>corte: 2</div>
+                      <div>estampacion: 9</div>  
+                    </div>
+                    <div>Total: 14</div>
+                  </div >
+
+                  <div >
+                    <div>Faltantes</div>
+                    <div className="faltantes">
+                      <div>talla 4: 2</div>
+                      <div>talla XS: 6</div>
+                      <div>talla M: 2</div>
+                    </div>
+                    <div>Total: 10</div>
+                  </div>
+
+                  <div >
+                    <div>Cobros</div>
+                    <div>Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, quaerat?</div>
+                    <div className="cobros">
+                      <div>catidad: 10</div>
+                      <div>valor: 25.000$</div>
+
+                    </div>
+
+                  </div>
+                  <div className="primeras">
+                    <div>Total Primeras: 20</div>
+                  </div>
+
+                </div>
+
+                <div className="auditoriaRight">
+                  <h3>Medidas</h3>
+                </div>
+
+              </div>
             </div>
 
-            <div className="detailDuo">
-              <div>Zona</div>
-              <div>{dataLocal.zona}</div>
+            <div className="containerRight">
+              <div className="containerObservacion">
+                <div>Obervacion</div>
+                <div>{dataLocal.observacion}</div>
+              </div>
+
+              <div>
+                <div className="detailDuo">
+                  <div>Sam</div>
+                  <div>{dataLocal.sam}</div>
+                </div>
+                <div className="detailDuo">
+                    <div>Sam total</div>
+                    <div>{dataLocal ? Number(dataLocal.sam) * Number(dataLocal.unidades) : ""}</div>
+                </div>
+              </div>
+
+              <div>
+                <div className="detailDuo">
+                  <div>Eficiencia</div>
+                  <div>{dataLocal.eficiencia}</div>
+                </div>
+                <div className="detailDuo">
+                  <div>Modulo</div>
+                  <div>{dataLocal.modulo}</div>
+                </div>
+              </div>
+              
+
             </div>
 
           </div>
-
-          <div className="containerEnd">
-            <div className="detailDuo">
-              <div>Capacidad</div>
-              <div>{dataLocal.capacidad}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Ciclo</div>
-              <div>{dataLocal.ciclo}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Modulo</div>
-              <div>{dataLocal.modulo}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Eficiencia</div>
-              <div>{dataLocal.eficiencia}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Sam</div>
-              <div>{dataLocal.sam}</div>
-            </div>
-
-            <div className="detailDuo">
-              <div>Sam total</div>
-              <div>{dataLocal ? Number(dataLocal.sam) * Number(dataLocal.unidades) : ''}</div>
-            </div>
-
-          </div>
-
-          <div className="detailDuo">
-            <div>Observacion</div>
-            <div>{dataLocal.observacion}</div>
-          </div>
-
         </div>
-
       </div>
       {
         confirmDelete && <p className="confirmEliminado">{confirmDelete}</p>

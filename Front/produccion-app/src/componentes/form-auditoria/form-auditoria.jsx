@@ -89,7 +89,8 @@ const FormAuditoria = (props) => {
         inferior:[]                                                                                                                                      
       })
     }
-    
+
+    setInput({...input, medidas:[]})
   }
 
   const addMedidasInfeiores=()=>{
@@ -99,6 +100,7 @@ const FormAuditoria = (props) => {
         inferior:[1]
       })
     }
+    setInput({...input, medidas:[]})
   }
 
   const removeMedidas=()=>{
@@ -107,6 +109,8 @@ const FormAuditoria = (props) => {
       superior:[],
       inferior:[]
     })
+
+    setInput({...input, medidas:[]})
   }
 
   const removeMissing=()=>{
@@ -229,7 +233,6 @@ const FormAuditoria = (props) => {
       },0):
         arrayFaltantes.length === 1 ?  Number(arrayFaltantes[0].cantidad) : '';
 
-      console.log(faltantesTotal)
       const segundas = input.segundas === '' ? 0 : input.segundas
       const primeras = Number(props.data.unidades) - (Number(faltantesTotal) + segundas)
 
@@ -241,7 +244,7 @@ const FormAuditoria = (props) => {
   }
 
 // esta funcion nos sirve para controlar los inputs de las medidas.
-  const changeInputMedidas=(e)=>{
+  const changeInputMedidasSupeiores=(e)=>{
 
     const {name, value} = e.target
     let arrayMedidas= input.medidas
@@ -253,16 +256,464 @@ const FormAuditoria = (props) => {
         talla: name.slice(5),
         medida: value
       }
-      console.log(newMedida)
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
 
-      console.log(name.slice(5))
+    }else if(name.slice(0,4) === 'sisa'){
+      let newMedida = {
+        tipo: name.slice(0,4),
+        talla: name.slice(4),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo ){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+
+    }else if(name.slice(0,5) === 'ruedo'){
+      let newMedida = {
+        tipo: name.slice(0,5),
+        talla: name.slice(5),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,12) === 'largo_frente'){
+
+      let newMedida = {
+        tipo: name.slice(0,12),
+          talla: name.slice(12),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,23) === 'largo_costado_desp_lava'){
+
+      let newMedida = {
+        tipo: name.slice(0,23),
+        talla: name.slice(23),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,13) === 'largo_costado'){
+
+      let newMedida = {
+        tipo: name.slice(0,13),
+          talla: name.slice(13),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+
+    }else if(name.slice(0,11) === 'largo_manga'){
+
+      let newMedida = {
+        tipo: name.slice(0,11),
+          talla: name.slice(11),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,6) === 'cuello'){
+
+      let newMedida = {
+        tipo: name.slice(0,6),
+        talla: name.slice(6),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,4) === 'puño'){
+
+      let newMedida = {
+        tipo: name.slice(0,4),
+          talla: name.slice(4),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
     }
+  }
 
 
+  const changeInputMedidasInfeiores=(e)=>{
+    const {name, value} = e.target
 
+    let arrayMedidas = input.medidas
+    if(name.slice(0,5) === 'ruedo'){
+      let newMedida = {
+        tipo: name.slice(0,5),
+        talla: name.slice(5),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
 
+    }else if(name.slice(0,17) === 'cintura_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,17),
+        talla: name.slice(17),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,16) === 'cadera_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,16),
+        talla: name.slice(16),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,16) === 'pierna_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,16),
+        talla: name.slice(16),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,17) === 'rodilla_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,17),
+        talla: name.slice(17),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,14) === 'bota_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,14),
+        talla: name.slice(14),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,23) === 'largo_costado_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,23),
+        talla: name.slice(23),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,21) === 'entrepierna_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,21),
+        talla: name.slice(21),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,24) === 'tiro_delantero_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,24),
+        talla: name.slice(24),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,24) === 'tiro_posterior_desp_lava'){
+      let newMedida = {
+        tipo: name.slice(0,24),
+        talla: name.slice(24),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,7) === 'cintura'){
+      let newMedida = {
+        tipo: name.slice(0,7),
+        talla: name.slice(7),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,6) === 'cadera'){
+      let newMedida = {
+        tipo: name.slice(0,6),
+        talla: name.slice(6),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,6) === 'pierna'){
+      let newMedida = {
+        tipo: name.slice(0,6),
+        talla: name.slice(6),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+
+    }else if(name.slice(0,7) === 'rodilla'){
+      let newMedida = {
+        tipo: name.slice(0,7),
+        talla: name.slice(7),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,4) === 'bota'){
+      let newMedida = {
+        tipo: name.slice(0,4),
+        talla: name.slice(4),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,13) === 'largo_costado'){
+      let newMedida = {
+        tipo: name.slice(0,13),
+        talla: name.slice(13),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,11) === 'entrepierna'){
+      let newMedida = {
+        tipo: name.slice(0,11),
+        talla: name.slice(11),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,14) === 'tiro_delantero'){
+      let newMedida = {
+        tipo: name.slice(0,14),
+        talla: name.slice(14),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
+    }else if(name.slice(0,14) === 'tiro_posterior'){
+      let newMedida = {
+        tipo: name.slice(0,14),
+        talla: name.slice(14),
+        medida: value
+      }
+      for(let i = 0 ; i< arrayMedidas.length ; i++){
+        if(arrayMedidas[i].talla === newMedida.talla && arrayMedidas[i].tipo === newMedida.tipo){
+          arrayMedidas[i] = newMedida
+          return setInput({...input, medidas: arrayMedidas})
+        }
+      }
+      arrayMedidas = [...arrayMedidas, newMedida]
+      console.log(arrayMedidas)
+      setInput({...input, medidas: arrayMedidas})
+    
     }
-
+  }
 
   const changeInput=(e)=>{
 
@@ -540,92 +991,92 @@ const FormAuditoria = (props) => {
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Pecho</div>
-                  <input onChange={changeInputMedidas} name="pechoXXS" type="number" />
-                  <input name="pechoXS" type="text" />
-                  <input name="pechoS" type="text" />
-                  <input name="pechoM" type="text" />
-                  <input name="pechoL" type="text" />
-                  <input name="pechoXL" type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="pechoXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="pechoXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="pechoS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="pechoM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="pechoL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="pechoXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Sisa</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="sisaXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="sisaXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="sisaS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="sisaM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="sisaL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="sisaXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Ruedo</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="ruedoXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="ruedoXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="ruedoS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="ruedoM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="ruedoL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="ruedoXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Largo Frente</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_frenteXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_frenteXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_frenteS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_frenteM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_frenteL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_frenteXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Largo Costado</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costadoXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costadoXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costadoS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costadoM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costadoL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costadoXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Largo Manga</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_mangaXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_mangaXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_mangaS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_mangaM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_mangaL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_mangaXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Cuello</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="cuelloXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="cuelloXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="cuelloS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="cuelloM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="cuelloL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="cuelloXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Puño</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="puñoXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="puñoXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="puñoS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="puñoM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="puñoL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="puñoXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Largo Costado Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costado_desp_lavaXXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costado_desp_lavaXS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costado_desp_lavaS" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costado_desp_lavaM" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costado_desp_lavaL" type="number" />
+                  <input onChange={changeInputMedidasSupeiores} name="largo_costado_desp_lavaXL" type="number" />
                 </div>
                 
               </div>
@@ -654,175 +1105,174 @@ const FormAuditoria = (props) => {
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Ruedo</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="ruedo4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="ruedo6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="ruedo8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="ruedo10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="ruedo12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Cintura</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Cadera</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera12" type="number" />
                 </div>
 
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Pierna</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-
+                  <input onChange={changeInputMedidasInfeiores} name="pierna4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Rodilla</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Bota</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="bota4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="bota6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="bota8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="bota10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="bota12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Largo Costado</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Entrepierna</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Tiro Delantero</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Tiro Posterior</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior4" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior6" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior8" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior12" type="number" />
                 </div>
                 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Cintura Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cintura_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Cadera Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="cadera_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Pierna Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="pierna_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Rodilla Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="rodilla_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Bota Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="bota_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="bota_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="bota_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="bota_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="bota_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Largo Costado Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="largo_costado_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Entrepierna Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="entrepierna_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Tiro Delantero Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_delantero_desp_lava12" type="number" />
                 </div>
 
                 <div className="containerRowInferiores">
                   <div className="titleFila">Tiro Posterior Desp Lava</div>
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
-                  <input type="text" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior_desp_lava4" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior_desp_lava6" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior_desp_lava8" type="number"  />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior_desp_lava10" type="number" />
+                  <input onChange={changeInputMedidasInfeiores} name="tiro_posterior_desp_lava12" type="number" />
                 </div>
               </div>
               <label >Otro: <textarea type="text" /></label>
