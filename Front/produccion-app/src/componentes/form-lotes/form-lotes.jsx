@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import './form-lotes.css'
@@ -7,9 +7,9 @@ import './form-lotes.css'
 const FormLotes=()=>{
 
   const [activeButon, setActiveButon] = useState(false)
-
   const [confirmCreate, setConfirmCreate] = useState('')
   const [opRepeat, setOpRepeat] = useState('')
+  const [confeccionistas, setConfeccionistas] = useState([])
 
   const [input, setInput] =  useState({
     op:'',
@@ -46,7 +46,7 @@ const FormLotes=()=>{
     const filtroGeneral = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ abcdefghijklmnñopqrstuvwxyz1234567890'
     const filtroNum= '1234567890.'
     const filtroLetra = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ abcdefghijklmnñopqrstuvwxyz'
-    const filtroConfeccionista = ['Confeccionista A', 'Confeccionista B','Confeccionista C','Confeccionista D', 'Confeccionista E' ]
+    const filtroConfeccionista = confeccionistas.map( e => e.nombre)
 
     switch(name){
       case 'op':  
@@ -202,12 +202,16 @@ const FormLotes=()=>{
       }
     })
   }
+  useEffect(()=>{
+    axios.get('http://localhost:3000/confeccionistas/get')
+    .then(r => setConfeccionistas(r.data))
+  },[])
 
   return(
     <div>
 
       <div className='containerHomeButton'>
-        <Link to='/' className='HomeFormLote'>Home</Link>
+        <Link to='/home-admin' className='HomeFormLote'>Home</Link>
       </div>
 
       <h2>
@@ -261,11 +265,12 @@ const FormLotes=()=>{
               <div>
                 <label>Confeccionista<br /><input type="text" name="confeccionista" list='confeccionistaList' id="confeccionista"  onChange={changeInput} /> </label>
                 <datalist id='confeccionistaList' >
-                  <option value="Confeccionista A">Confeccionista A</option> 
-                  <option value="Confeccionista B">Confeccionista B</option>
-                  <option value="Confeccionista C">Confeccionista C</option>
-                  <option value="Confeccionista D">Confeccionista D</option>
-                  <option value="Confeccionista E">Confeccionista E</option>
+                  {
+                    confeccionistas.length > 0 && confeccionistas.map((e,i)=>
+                    <option key={i} value={e.nombre}>{e.nombre}</option>
+                    
+                    )
+                  }
                 </datalist>
                 {
                   errors.confeccionista && <p className='errors'>{errors.confeccionista}</p>

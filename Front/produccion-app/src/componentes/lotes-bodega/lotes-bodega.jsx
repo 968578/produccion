@@ -6,11 +6,11 @@ const LotesBodega=()=>{
   const lotes = useSelector(state => state.AllLotes)
   return(
     <div >
-      <h2>Lotes en Bodega</h2>
+      <h2>Lotes en Confeccion</h2>
       <div className="containerAllLotes">
       {
         lotes && lotes.map(e=>
-          e.estado ==='two' &&
+          e.estado ==='Confeccion' &&
           <Lote key={e.op} showLote={e} />
           )
       }

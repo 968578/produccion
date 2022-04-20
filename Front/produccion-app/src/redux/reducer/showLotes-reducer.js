@@ -2,7 +2,7 @@ import{
   LOAD_SHOW_LOTES,
   SEARCH_LOTE_NAME,
   ONLY_PAROS,
-  ONLY_BODEGA,
+  ONLY_PREPARACION,
   ONLY_CONFECCION
 } from '../actions/actions'
 
@@ -19,17 +19,17 @@ const ShowLotes=(state= [], action )=>{
 
     case ONLY_PAROS:
       return[
-        ...action.payload.filter((e)=> e.estado === 'one')
+        ...action.payload.filter((e)=> e.estado === 'Paro')
       ];
 
-    case ONLY_BODEGA:
+    case ONLY_PREPARACION:
       return[
-        ...action.payload.filter((e)=> e.estado === 'two')
+        ...action.payload.filter((e)=> e.estado === 'Preparacion')
       ]
 
     case ONLY_CONFECCION:
       return[
-        ...action.payload.filter((e)=> e.estado === 'four')
+        ...action.payload.filter((e)=> e.estado === 'Confeccion')
       ]
     default: return state
 

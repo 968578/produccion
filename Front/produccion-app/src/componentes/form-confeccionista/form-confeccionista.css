@@ -1,0 +1,18 @@
+.generatePassword{
+  width: max-content;
+  border: 1px solid black;
+  margin: 0 auto;
+}
+
+.generatePassword:hover{
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+
+}
+
+.containerAddConfe{
+  /* position: fixed;
+  top: 20%;
+  left: 35%; */
+
+}

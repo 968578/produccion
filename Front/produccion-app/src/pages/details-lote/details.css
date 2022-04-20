@@ -1,6 +1,6 @@
 .containerDetails{
   
-  margin: 0 10% 0 10%;
+  margin: 0 5% 0 5%;
   border: solid gray 1px;
   margin-top: 20px;
   padding: 0 5px 5px;
@@ -129,13 +129,15 @@
 .containerAuditoria{
   grid-column: 1/ span 3;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr auto;
   gap: 3px;
+  min-height: 400px;
+  min-width: 200px;
+  
   
 }
 
 .containerAuditoria > div{
-  
   border-radius: 5px;
 }
 
@@ -154,7 +156,7 @@
 
 .cabeceroAuditoria{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto auto;
 }
 
 .auditoriaLeft > div{
@@ -163,7 +165,6 @@
 }
 
 .cabeceroAuditoria > div{
-
   text-align: start;
 }
 
@@ -172,33 +173,58 @@
 }
 
 .noConformidades{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .faltantes{
-  display:  flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .cobros{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .primeras{
-  
   align-self: center;
 }
 
 .auditoriaRight{
   border: 1px solid black;
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  gap: 5px;
+  
+}
+
+.auditoriaRight > div{
+  
+}
+.medidas{
+  display: grid;
+  grid-template-columns: repeat(4, auto) ;
+  gap: 3px;
+  padding-bottom: 5px;
+}
+
+.medidaSola{
+  /* margin-right: 5px; */
+
+  border-radius: 3px;
+  background-color: #ecf0f1;
+  font-size: 15px;
 
 }
+
+.seccionPorMedida{
+  border-bottom: 1px solid black;
+  margin: 3px 3px 0 3px;
+}
+
+.noAuditado{
+  border: 1px solid #000 ;
+  font-size: 30px;
+}
+

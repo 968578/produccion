@@ -2,6 +2,7 @@ const { Router } = require('express')
 
 const pool = require('../db.conection')
 const router = Router()
+const {verifyToken} = require('../middlewares/middlewares')
 
 
 //solicitar lotes    
@@ -32,33 +33,93 @@ router.get('/get', (req,res)=>{
 //  para solicitar lotes por op
 //  ruta /lotes
 router.get('/op', (req,res)=>{
-
   
   const {op} = req.query
   
-  const query = `SELECT * FROM lotes AS l
-    INNER JOIN auditorias AS a ON l.op = a.op 
-    INNER JOIN medidas AS m ON l.op = m.op 
-    INNER JOIN no_conformidades AS n ON l.op = n.op 
-    INNER JOIN faltantes AS f ON l.op = f.op 
-    INNER JOIN cobros AS c ON l.op = c.op
-    WHERE l.op ='${op}' ;`
-
+  const queryLotes = `SELECT * FROM lotes WHERE op = '${op}';`
+  const queryAuditoria =`SELECT * FROM auditorias WHERE op = '${op}';`
+  const queryFaltantes =`SELECT * FROM faltantes WHERE op = '${op}';`
+  const queryNo_conformidades =`SELECT * FROM no_conformidades WHERE op = '${op}';`
+  const queryMedidas = `SELECT * FROM medidas WHERE op = '${op}';`
+  const queryCobros =`SELECT * FROM cobros WHERE op = '${op}';`
+  let lote = {}
 
   try {
 
     pool.getConnection((err, conn)=>{
       if(err) throw err
 
-      conn.query(query, (error, results)=>{
+      conn.query(queryLotes, (error, results)=>{
         
         if(error) throw error
-        res.json(results)
+        lote = { ...results[0]}
+      })
+      conn.query(queryAuditoria, (error, results)=>{
+        
+        if(error) throw error
+        if(results.length > 0){
+          lote.auditoria = { ...results[0]}
+        }
+      })
+      conn.query(queryFaltantes, (error, results)=>{
+        
+        if(error) throw error
+        if(lote.auditoria){
+          lote.auditoria.faltantes = [...results] 
+
+        }
+      })
+      conn.query(queryNo_conformidades, (error, results)=>{
+        
+        if(error) throw error
+        if(lote.auditoria){
+          lote.auditoria.segundas = [...results] 
+
+        }
+      })
+      conn.query(queryMedidas, (error, results)=>{
+        
+        if(error) throw error
+        if(lote.auditoria){
+          lote.auditoria.medidas = [...results] 
+
+        }
+
+      })
+      conn.query(queryCobros, (error, results)=>{
+        
+        if(error) throw error
+        if(lote.auditoria){
+          lote.auditoria.cobros = {...results[0]} 
+
+        }
+        res.json(lote)
         conn.release()
       })
     })
     
+  } catch (error) {
+    console.log(error)
+  }
+})
 
+router.get ('/nombre', verifyToken,(req,res)=>{
+
+  const nombre = req.user.nombre
+  try {
+    const query = `SELECT * FROM lotes  WHERE lotes.confeccionista = '${nombre}';`
+    pool.getConnection((err, conn)=>{
+      if(err) throw err
+
+      conn.query(query, (error, results)=>{
+
+        if (error ) throw error
+
+        return res.json({msj:'Autorizado', lotes: results, nombre })
+      })
+      conn.release()
+
+    })
   } catch (error) {
     console.log(error)
   }
@@ -138,6 +199,31 @@ router.put('/update', (req, res)=>{
     console.log(error)
   }
 
+})
+
+
+// este nos sirve para actualizar las observaciones 
+// ruta /lotes
+router.post('/observacion', (req, res)=>{
+  const {observacion , estado, op} = req.body
+  try {
+    
+    const query = `UPDATE lotes SET observacion = '${observacion}', estado = '${estado}' WHERE op ='${op}' `
+    pool.getConnection((err, conn)=>{
+      if(err) throw err
+
+      conn.query(query, (error, results)=>{
+        if(error) throw error
+
+        return res.send('Estado Cambiado con exito')
+      })
+      conn.release()
+
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 

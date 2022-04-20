@@ -1,0 +1,9 @@
+.c-confeccionistas{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* justify-self: center;
+  align-self: center; */
+  margin: 0 10% 10% 10%;
+
+
+}

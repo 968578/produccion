@@ -13,7 +13,7 @@ const LotesParo=()=>{
       <div className="containerAllLotes">
       {
         lotes && lotes.map(e=>
-          e.estado ==='one' &&
+          e.estado ==='Paro' &&
           <Lote key={e.op} showLote={e} />
           )
       }

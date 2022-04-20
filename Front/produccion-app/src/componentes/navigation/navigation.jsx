@@ -5,12 +5,14 @@ import { useState } from 'react'
 import {
   searchLoteName,
   onlyParos,
-  onlyBodega,
+  onlyPreparacion,
   onlyConfeccion
   } from '../../redux/actions/actions'
 import { useDispatch, useSelector } from 'react-redux'
 
-const Navigation=()=>{
+const Navigation=(props)=>{
+
+  console.log(props)
 
   const [inputOp, setInputOp] = useState('')
 
@@ -29,13 +31,15 @@ const Navigation=()=>{
     dispatch(onlyParos(allLotes))
   }
 
-  const filterBodega=()=>{
-    dispatch(onlyBodega(allLotes))
+  const filterPreparacion=()=>{
+    dispatch(onlyPreparacion(allLotes))
   }
 
   const filterConfeccion=()=>{
     dispatch(onlyConfeccion(allLotes))
   }
+
+  
 
   return(
     <div className='navigation' >
@@ -51,12 +55,12 @@ const Navigation=()=>{
           <Link to='/insert-lotes'>Crear Un Lote</Link>
         </div>
 
-        <div className='buttonLink' >
-          <Link to='/'>Agregar Confeccionista</Link>
+        <div onClick={()=> props.activeAddConfe()} className='buttonLink' >
+          Agregar Confeccionista
         </div>
 
-        <div onClick={filterParos}>Solo Paros</div>
-        <div onClick={filterBodega}>En Bodega</div>
+        {/* <div onClick={filterParos}>Solo Paros</div> */}
+        <div onClick={filterPreparacion}>En Preparacion</div>
         <div onClick={filterConfeccion}>En Confeccion</div>
       </div>
     </div>

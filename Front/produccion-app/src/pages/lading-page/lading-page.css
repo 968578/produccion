@@ -1,0 +1,32 @@
+.c-section{
+  border: 1px solid #000;
+  height: 250px;
+  width: 250px;
+  justify-self: center;
+  text-align-last: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+
+.c-section:hover{
+  background-color: #ecf0f1;
+}
+
+.c-section > h4{
+  margin: 0;
+  
+}
+
+.c-sections{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 15% 20% 0 20%;
+  
+}
+
+.c-sections > a{
+  text-decoration: none;
+  color: #000;
+}

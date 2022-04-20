@@ -11,19 +11,25 @@ router.post('/insert', (req, res) => {
     no_conformidades, op, primeras, segundas, tipo_revision, unidades_muestra } = req.body
 
   try {
-    const queryAuditoria = `INSERT INTO auditorias (op, fecha_auditoria, composicion, unidades_muestra, muestra_fisica, tipo_revision,
-            colaboradores_karibik, auditor, faltantes, segundas, primeras)  VALUES ('${op}', '${fecha_auditoria}', '${composicion}',
-            '${unidades_muestra}', '${muestra_fisica}', '${tipo_revision}', '${colaboradores_karibik}', '${auditor}', '${faltantesTotal}',
-            '${segundas}', '${primeras}');`
 
-    pool.getConnection((err, conn) => {
+    pool.getConnection(async (err, conn) => {
       if (err) throw err
 
+      conn.query('START TRANSACTION;', (error, results) => {
+        if (error) throw error        
+      })
+
+      const queryAuditoria = `INSERT INTO auditorias (op, fecha_auditoria, composicion, unidades_muestra, muestra_fisica, tipo_revision,
+        colaboradores_karibik, auditor, faltantes_totales, segundas_totales, primeras)  VALUES ('${op}', '${fecha_auditoria}',
+        '${composicion}', '${unidades_muestra}', '${muestra_fisica}', '${tipo_revision}', '${colaboradores_karibik}', '${auditor}',
+        '${faltantesTotal}', '${segundas}', '${primeras}');`
       conn.query(queryAuditoria, (error, results) => {
-
         if (error) throw error
+      })
 
-        
+      const queryUpdateAuditado = `UPDATE lotes SET auditado = ${true} WHERE op = '${op}';`
+      conn.query(queryUpdateAuditado, (error, results) => {
+        if (error) throw error 
       })
 
       if(no_conformidades.length > 0){
@@ -34,14 +40,13 @@ router.post('/insert', (req, res) => {
               VALUES('${op}', '${no_conformidades[i].defecto}', '${no_conformidades[i].cantidad}');`
 
               conn.query(queryNoConformidades, (error, results) => {
-      
                 if (error) throw error
-
-                
               })
           }
         }
-      } if(faltantes.length > 0){
+      } 
+      
+      if(faltantes.length > 0){
           for(let i = 0; i < faltantes.length ; i++){
             if(faltantes[i].talla && faltantes[i].cantidad ){
   
@@ -49,14 +54,14 @@ router.post('/insert', (req, res) => {
                 VALUES('${op}', '${faltantes[i].talla}', '${faltantes[i].cantidad}');`
   
                 conn.query(queryFaltantes, (error, results) => {
-        
                   if (error) throw error
-
                   
                 })
             }
           }
-      } if(medidas.length > 0){
+      } 
+      
+      if(medidas.length > 0){
           for(let i = 0; i < medidas.length ; i++){
             if(medidas[i].tipo && medidas[i].talla && medidas[i].medida ){
 
@@ -64,27 +69,27 @@ router.post('/insert', (req, res) => {
                 VALUES('${op}', '${medidas[i].talla}', '${medidas[i].tipo}', '${medidas[i].medida}');`
 
                 conn.query(queryMedidas, (error, results) => {
-        
-                  if (error) throw error
-
-                  
+                  if (error)throw error
                 })
             }
           }
-      } if (cobros.descripcion_cobros && cobros.cantidad_cobros && cobros.valor_cobros){
+      } 
+      
+      if (cobros.descripcion_cobros && cobros.cantidad_cobros && cobros.valor_cobros){
           const queryCobros = `INSERT INTO cobros(op, descripcion, cantidad, valor)  
               VALUES('${op}', '${cobros.descripcion_cobros}', '${cobros.cantidad_cobros}', '${cobros.valor_cobros}');`
 
           conn.query(queryCobros, (error, results) => {
-        
             if (error) throw error
-            
-            conn.release()    
           })
       }
 
-    })
+      conn.query('COMMIT;', (error, results) => {
+        if (error) throw error
+        conn.release()    
+      })
 
+    })
     res.send('Auditoria Guardada con exito')
 
   } catch (error) {

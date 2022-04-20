@@ -9,6 +9,8 @@ const FormAuditoria = (props) => {
   
   const [countFault, setCountFault] = useState([])
   const [countMissing, setCountMissing] = useState([]) 
+  const [focusInput, setFocusInput] = useState(false)
+  const [focusPechoXl, setFocusPechoXl] = useState(false)
   const [countMedidas, setCountMedidas] = useState({
     superior:[],
     inferior:[]
@@ -799,6 +801,25 @@ const FormAuditoria = (props) => {
 
   }
 
+  const onFocusInput=(e)=>{
+    
+    if(e.type === 'focus'){
+      setFocusInput(true)
+    }else if(e.type === 'blur'){
+      setFocusInput(false)
+    }
+  }
+
+  const onFocusPechoXl=(e)=>{
+    
+    if(e.type === 'focus'){
+      setFocusPechoXl(true)
+      
+    }else if(e.type === 'blur'){
+      setFocusPechoXl(false)
+    }
+  }
+
   useEffect(()=>{
     if(props.data.unidades !== undefined){
       setInput({...input, 
@@ -985,22 +1006,22 @@ const FormAuditoria = (props) => {
 
                 <div className="containerRowSuperiores">
                   <div className="titleFila">Tallas</div>
-                  <div className="titleTalla">XXS</div>
+                  <div className={focusInput ? 'titleTalla ensayo' : 'titleTalla' } >XXS</div>
                   <div className="titleTalla">XS</div>
                   <div className="titleTalla">S</div>
                   <div className="titleTalla">M</div>
                   <div className="titleTalla">L</div>
-                  <div className="titleTalla">XL</div>
+                  <div className={focusPechoXl ? 'titleTalla ensayo' : 'titleTalla' }>XL</div>
                 </div>
 
                 <div className="containerRowSuperiores">
-                  <div className="titleFila">Pecho</div>
-                  <input onChange={changeInputMedidasSupeiores} name="pechoXXS" type="number" />
+                  <div className={focusInput ? 'titleFila ensayo' : focusPechoXl ? 'titleFila ensayo' : 'titleFila' } >Pecho</div>
+                  <input onFocus={onFocusInput} onBlur={onFocusInput} onChange={changeInputMedidasSupeiores} name="pechoXXS" type="number" />
                   <input onChange={changeInputMedidasSupeiores} name="pechoXS" type="number" />
                   <input onChange={changeInputMedidasSupeiores} name="pechoS" type="number" />
                   <input onChange={changeInputMedidasSupeiores} name="pechoM" type="number" />
                   <input onChange={changeInputMedidasSupeiores} name="pechoL" type="number" />
-                  <input onChange={changeInputMedidasSupeiores} name="pechoXL" type="number" />
+                  <input onFocus={onFocusPechoXl} onBlur={onFocusPechoXl} onChange={changeInputMedidasSupeiores} name="pechoXL" type="number" />
                 </div>
 
                 <div className="containerRowSuperiores">

@@ -17,19 +17,22 @@ const DetailsLoteAuditoria = () => {
   const params = useParams()
 
   const [dataLocal, setDataLocal] = useState('')
-  const [confirmDelete, setconfirmDelete] = useState('')
   const [activeEdit, setActiveEdit] = useState(false)
 
 
   useEffect(() => {
-    axios.get('http://localhost:3000/lotes/get')
+    // axios.get("http://localhost:3000/lotes/get").then((r) => {
+    //   // dispatch(loadAllLotes(r.data))
+    //   // dispatch(loadShowLotes(r.data))
+    //   setDataLocal(...r.data.filter((e) => e.op === params.op));
+    // });
+    const op = { op: params.op }
+    axios.get("http://localhost:3000/lotes/op", { params: op })
       .then(r => {
-        // dispatch(loadAllLotes(r.data))
-        // dispatch(loadShowLotes(r.data))
-        setDataLocal(...r.data.filter((e) => e.op === params.op))
+        console.log(r.data)
+        setDataLocal(r.data)
       })
-
-  }, [])
+  }, []);
 
 
   const AuditarLote = () => {
@@ -41,7 +44,7 @@ const DetailsLoteAuditoria = () => {
   return (
     <div>
       <div className="containerHomeButton">
-        <Link to="/" className="HomeFormLote">
+        <Link to="/home-auditoria" className="HomeFormLote">
           Home
         </Link>
       </div>
@@ -53,6 +56,7 @@ const DetailsLoteAuditoria = () => {
             <div className="L"></div>
           </div>
         </div>
+
 
         <div >
 
@@ -95,7 +99,7 @@ const DetailsLoteAuditoria = () => {
                   <div>{dataLocal.estado}</div>
                 </div>
               </div>
-                
+
 
               <div className="containerStart">
                 <div className="detailDuo">
@@ -121,7 +125,7 @@ const DetailsLoteAuditoria = () => {
 
               <div className="containerStart">
                 <div className="detailDuo">
-                  <div>Teido</div>
+                  <div>Tejido</div>
                   <div>{dataLocal.tejido}</div>
                 </div>
 
@@ -141,63 +145,244 @@ const DetailsLoteAuditoria = () => {
                 </div>
 
               </div>
-
-              <div className=" containerAuditoria">
-                <div className="auditoriaLeft">
-                  <div >
-                  <div>Auditoria</div>
-                    <div className="cabeceroAuditoria">
-                      <div>Fecha Auditoria: feb, 20 , 2022</div>
-                      <div>Auditor: Omar Echavarria</div>
-                      <div>Unidades Muestra: 10</div>
-                      <div>Muestra fisica: si</div>
-                      <div>Colaboradores Karibik: 10</div>
-                      <div>Tipo de revision: premuestra</div>
-                      <div className="composicionAuditoria">composicion: 100% algodon, 10% poliester, 35% plastico</div>
-                    </div>
+              {
+                dataLocal.auditado == false ?
+                  <div className=" containerAuditoria">
+                    <div className="noAuditado">No Ha sido auditado</div>
                   </div>
+                  :
+                  <div className=" containerAuditoria">
+                    <div className="auditoriaLeft">
+                      <div >
+                        <div>Auditoria</div>
+                        <div className="cabeceroAuditoria">
+                          <div>Fecha Auditoria: {dataLocal.auditoria?.fecha_auditoria}</div>
+                          <div>Auditor: {dataLocal.auditoria?.auditor}</div>
+                          <div>Unidades Muestra: {dataLocal.auditoria?.unidades_muestra}</div>
+                          <div>Muestra fisica: {dataLocal.auditoria?.muestra_fisica}</div>
+                          <div>Colaboradores Karibik: {dataLocal.auditoria?.colaboradores_karibik}</div>
+                          <div>Tipo de revision: premuestra</div>
+                          <div className="composicionAuditoria">Composicion: {dataLocal.auditoria?.composicion}</div>
+                        </div>
+                      </div>
 
-                  <div >
-                    <div>No Conformidades</div>
-                    <div className="noConformidades">
-                      <div>tela: 3</div>
-                      <div>corte: 2</div>
-                      <div>estampacion: 9</div>  
+                      {
+                        dataLocal.auditoria?.medidas.length > 0 && Number(dataLocal.auditoria.medidas[0].talla) ?
+                          <div >
+                            <div>Medidas</div>
+                            <div className="containerMedidasLetra">
+                              <div className="seccionPorMedida">
+                                <div>4</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === '4' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>6</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === '6' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>8</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === '8' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>10</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === '10' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>12</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === '12' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          :
+                          <div>
+
+                            <div className="containerMedidasLetra">
+                              <div className="seccionPorMedida">
+                                <div>XXS</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === 'XXS' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>XS</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === 'XS' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>S</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === 'S' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>M</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === 'M' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>L</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === 'L' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                              <div className="seccionPorMedida">
+                                <div>XL</div>
+                                <div className="medidas">
+                                  {
+                                    dataLocal.auditoria?.medidas.length > 0 && dataLocal.auditoria?.medidas.map((e, i) =>
+                                      e.talla === 'XL' &&
+                                      <div className="medidaSola" key={i} >{e.tipo}: {e.medida} </div>
+                                    )
+                                  }
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                      }
+
+
                     </div>
-                    <div>Total: 14</div>
-                  </div >
 
-                  <div >
-                    <div>Faltantes</div>
-                    <div className="faltantes">
-                      <div>talla 4: 2</div>
-                      <div>talla XS: 6</div>
-                      <div>talla M: 2</div>
+                    <div className="auditoriaRight">
+                      <div >
+                        <div>No Conformidades</div>
+                        <div className="noConformidades">
+                          {
+                            dataLocal.auditoria?.segundas.length > 0 && dataLocal.auditoria.segundas.map((e, i) =>
+                              <div key={i}>
+                                {e.defecto}: {e.cantidad}
+                              </div>
+
+                            )
+                          }
+                        </div>
+
+                        <div>Total: {dataLocal.auditoria?.segundas.length > 0 &&
+                          dataLocal.auditoria.segundas.reduce((acc, a) => acc += Number(a.cantidad), 0)}</div>
+                      </div >
+
+                      <div >
+                        <div>Faltantes</div>
+                        <div className="faltantes">
+                          {
+                            dataLocal.auditoria?.faltantes.length > 0 && dataLocal.auditoria.faltantes.map((e, i) =>
+                              <div key={i}>
+                                {e.talla}: {e.cantidad}
+                              </div>
+                            )
+                          }
+                        </div>
+                        <div>Total: {dataLocal.auditoria?.faltantes.length > 0 &&
+                          dataLocal.auditoria.faltantes.reduce((acc, a) => acc += Number(a.cantidad), 0)}</div>
+                      </div>
+
+                      <div >
+                        <div>Cobros</div>
+                        {
+                          dataLocal.auditoria?.cobros &&
+                          <div>Descripcion: {dataLocal.auditoria?.cobros.descripcion}</div>
+                        }
+
+                        <div className="cobros">
+
+                          {
+                            dataLocal.auditoria?.cobros &&
+                            <div>Cantidad:{dataLocal.auditoria?.cobros.cantidad}</div>
+                          }
+                          {
+                            dataLocal.auditoria?.cobros &&
+                            <div>Valor: {new Intl.NumberFormat().format(dataLocal.auditoria?.cobros.valor)}$</div>
+                          }
+
+                        </div>
+
+                      </div>
+                      <div className="primeras">
+                        {
+                          dataLocal.auditoria?.primeras &&
+                          <div>Total Primeras: {dataLocal.auditoria.primeras}</div>
+                        }
+                      </div>
+
                     </div>
-                    <div>Total: 10</div>
-                  </div>
-
-                  <div >
-                    <div>Cobros</div>
-                    <div>Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, quaerat?</div>
-                    <div className="cobros">
-                      <div>catidad: 10</div>
-                      <div>valor: 25.000$</div>
-
-                    </div>
 
                   </div>
-                  <div className="primeras">
-                    <div>Total Primeras: 20</div>
-                  </div>
+              }
 
-                </div>
-
-                <div className="auditoriaRight">
-                  <h3>Medidas</h3>
-                </div>
-
-              </div>
             </div>
 
             <div className="containerRight">
@@ -212,8 +397,8 @@ const DetailsLoteAuditoria = () => {
                   <div>{dataLocal.sam}</div>
                 </div>
                 <div className="detailDuo">
-                    <div>Sam total</div>
-                    <div>{dataLocal ? Number(dataLocal.sam) * Number(dataLocal.unidades) : ""}</div>
+                  <div>Sam total</div>
+                  <div>{dataLocal ? Number(dataLocal.sam) * Number(dataLocal.unidades) : ""}</div>
                 </div>
               </div>
 
@@ -227,16 +412,13 @@ const DetailsLoteAuditoria = () => {
                   <div>{dataLocal.modulo}</div>
                 </div>
               </div>
-              
+
 
             </div>
 
           </div>
         </div>
       </div>
-      {
-        confirmDelete && <p className="confirmEliminado">{confirmDelete}</p>
-      }
       <FormAuditoria data={dataLocal} />
     </div>
   )
