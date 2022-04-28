@@ -1,12 +1,14 @@
 const mysql  = require('mysql');
+require('dotenv').config()
+
 
 
 const pool = mysql.createPool({
-  host     : 'localhost',
-  user     : 'root',
-  password : '123456',
-  database : 'produccion',
-  port: '3306'
+  host     : process.env.HOST,
+  user     : process.env.USER,
+  password : process.env.PASSWORD,
+  database : process.env.DATABASE,
+  port: process.env.PORT
 });
 
 
