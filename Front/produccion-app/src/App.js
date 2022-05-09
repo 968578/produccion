@@ -13,6 +13,7 @@ import DetailsConfeccionistaPage from "./pages/p-details-lote-confeccionista/p-d
 import HomeCedi from "./pages/p-home-cedi/p-home-cedi";
 import AdminConfi from "./pages/p-admin-confi/p-admin-confi";
 
+
 function App() {
   return (
     <div className="App">
