@@ -32,7 +32,6 @@ router.get('/get', verifyTokenGeneral ,(req, res) => {
 })
 
 
-
 //  para solicitar lotes por op
 //  ruta /lotes
 router.get('/op', verifyTokenGeneral ,(req, res) => {
@@ -112,7 +111,6 @@ router.get('/op', verifyTokenGeneral ,(req, res) => {
 
           })
         }
-        console.log('cierra')
         conn.release()
       })
 
@@ -122,6 +120,7 @@ router.get('/op', verifyTokenGeneral ,(req, res) => {
     console.log(error)
   }
 })
+
 
 router.get('/op-from-confeccionista', verifyTokenConfeccionista , (req,res)=>{
   const { op } = req.query
@@ -199,7 +198,6 @@ router.get('/op-from-confeccionista', verifyTokenConfeccionista , (req,res)=>{
 
           })
         }
-        console.log('cierra')
         conn.release()
       })
 
@@ -209,7 +207,6 @@ router.get('/op-from-confeccionista', verifyTokenConfeccionista , (req,res)=>{
     console.log(error)
   }
 })
-
 
 
 // para solictar lotes por nombre de confeccionista
@@ -237,7 +234,6 @@ router.get('/nombre', verifyTokenConfeccionista, (req, res) => {
 })
 
 
-
 // para agregar lotes   
 //  ruta /lotes
 router.post('/insert', verifyTokenGeneral ,(req, res) => {
@@ -263,13 +259,12 @@ router.post('/insert', verifyTokenGeneral ,(req, res) => {
 
         if (error) {
           if (error.errno === 1062) {
-            return res.send('¡¡OP ya existe, cambie la OP para que sea unica!!')
+            res.send('¡¡OP ya existe, cambie la OP para que sea unica!!')
           } else throw error
 
         } else {
           res.send('Agregado con exito')
         }
-
         conn.release()
       })
     })
@@ -302,7 +297,7 @@ router.put('/update', verifyTokenGeneral ,(req, res) => {
       conn.query(query, (error, results) => {
         if (error) throw error
 
-        res.send('Actualizado con exito')
+        res.json({msj:'Actualizado con exito'})
         conn.release()
       })
     })
@@ -653,7 +648,7 @@ router.delete('/delete',verifyTokenGeneral , (req, res) => {
       conn.query(query, (error, results) => {
 
         if (error) throw error
-        res.send('Eliminado con exito')
+        res.json({msj: 'Eliminado con exito'})
         conn.release()
       })
     })
@@ -662,6 +657,7 @@ router.delete('/delete',verifyTokenGeneral , (req, res) => {
     console.log(error)
   }
 })
+
 
 
 module.exports = router

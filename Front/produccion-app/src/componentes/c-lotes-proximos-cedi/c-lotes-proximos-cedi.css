@@ -1,0 +1,19 @@
+.titleLotesProximos{
+  background-color: #211f23;
+    margin: auto;
+    width: max-content;
+    padding: 0 50px 0 50px;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+}
+
+.titleLotesProximos > h2{
+      color: white;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 25px;
+}
+
+@media screen and (max-width: 600px) {
+  .titleLotesProximos > h2{
+    width: 250px;
+  }
+}

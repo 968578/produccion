@@ -1,6 +1,53 @@
 .containerAllLotes{
-  margin: 20px 5% 0 5%;
-  max-height: 20rem;
-  overflow: auto;
+  margin: 0px 3% 0 3%;
+  max-height: 28rem;
+  background-color: #30475E;
+
+  /* background-color: red; */
+  overflow-y: auto;
+  overflow-x: hidden;
+
 }
+
+.containerAllLotes::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.containerAllLotes::-webkit-scrollbar:vertical {
+  width:5px;
+}
+.containerAllLotes::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+  display: none;
+} 
+
+.containerAllLotes::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+}
+
+.c-lotesActivos{
+  background-color: #30475E;
+  margin: 0 5% 0 5%;
+  border-radius: 20px;
+  padding-bottom: 30px;
+  padding-top: 5px;
+  margin-top: 50px;
+
+}
+
+
+.c-titleActivos{
+  background-color: #211f23;
+  margin: auto;
+  width: min-content;
+  padding: 0 30px 0 30px;
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
+
+.c-titleActivos > h2{
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 25px;
+}
+
 

@@ -1,0 +1,24 @@
+.c-lotesCedi{
+
+  margin: 20px 5% 0 5%;
+  height: 25rem;
+  overflow: auto;
+
+}
+
+.titleLotesLiberados{
+
+  background-color: #211f23;
+    margin: auto;
+    width: max-content;
+    padding: 0 50px 0 50px;
+    clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%);
+}
+
+
+.titleLotesLiberados > h2{
+  color: #0076a8;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 25px;
+}
+

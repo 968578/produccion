@@ -5,6 +5,15 @@
   
 }
 
+.titleCrearLote{
+  font-family: 'Lato', sans-serif;
+}
+
+.titleNewLote{
+  font-family: 'Fredoka', sans-serif;
+  font-size: 30px;
+}
+
 .containerHomeButton{
   display: flex;
   flex-direction: column;
@@ -14,9 +23,7 @@
 }
 
 .containerHomeButton a{
-  color: black;
   text-decoration: none;
-  border: 1px solid black;
   border-radius: 3px;
   height: 30px;
   width: 60px;
@@ -24,7 +31,7 @@
 }
 
 .containerHomeButton a:hover{
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 3px 3px 10px white;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -85,7 +92,7 @@
 }
 
 .botonForm:hover{
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 3px 3px 10px white;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -105,7 +112,7 @@
   margin: 0 auto;
   margin-top: 10px;
   padding: 3px 2px 5px 3px ;
-  background-color: #34495e;
+  background-color: #0076a8;
   color: white;
 }
 
@@ -117,4 +124,22 @@
   padding: 3px 2px 5px 3px ;
   background-color: #c0392b;
   color: white;
+}
+
+
+@media screen and (max-width: 600px) {
+  .containerTwoInputs div label input{
+    font-size: 15px;
+    width: 100px;
+  }
+
+  .containerTwoInputs{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 350px;
+  }
+
+  .itemIzquierdo{
+    margin-right: 0px;
+  }
 }

@@ -3,18 +3,22 @@
   flex-direction: row;
   padding-left: 10%;
   padding-top: 30px;
+  background-color: #211f23;
 }
 
 .HomeButton{
-  border: 1px solid black;
+  /* border: 1px solid white; */
+  color: white;
   border-radius: 3px;
   height: 30px;
   width: 60px;
   padding: 4px 0px 0px 0px ;
+  border-radius: 5px;
+  font-family: 'Lato', sans-serif;
 }
 
 .HomeButton:hover{
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 3px 3px 10px white;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -37,14 +41,17 @@
 
 .containerBuscar div{
   height: 23px;
-  border: 1px solid black;
+  border: 1px solid white;
+  color: white;
   border-radius: 3px ;
   padding: 2px 3px 1px 5px;
+  font-family: 'Lato', sans-serif;
+  
 
 }
 
 .containerBuscar div:hover{
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 3px 3px 10px white;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -56,24 +63,98 @@
 }
 
 .containerButtons div{
-  border: solid black 1px;
-  border-radius: 3px;
+  color: white;
   height: 25px;
   margin-right: 10px;
-  padding: 0 4px 0 4px;
-
+  border-radius: 5px;
+  font-family: 'Lato', sans-serif;
+  padding: 3px 4px 0 3px;
 }
 
 
 .buttonLink a{
   text-decoration: none;
-  color: black;
-  
+  color: white;
+  border-radius: 5px;
+  font-family: 'Lato', sans-serif;
 }
 
 .containerButtons div:hover{
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 3px 3px 10px white;
   cursor: pointer;
   transition: 0.5s;
 }
 
+.closeSession:hover{
+  background-color: #da0039;
+  
+}
+
+
+.b-bookings{
+  background-color: #0076a8;
+  
+  
+}
+
+.b-bookings:hover{
+  background-color: #0076a8;
+  
+}
+
+@media screen and (max-width : 1023px) {
+  .navigation{
+    padding-left: 5%;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+  }
+
+  .containerBuscar{
+    margin-left:20px ;
+  }
+
+  .containerButtons{
+    margin-top: 10px;
+    grid-column: 1 /span 2;
+  }
+  
+}
+
+@media screen and (max-width: 600px) {
+
+  .navigation{
+    padding-right: 0;
+    
+  }
+
+  .containerButtons{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-right: 20px;
+  }
+  .containerButtons div{
+    
+    margin-right: 0px;
+    font-size: 16px;
+    justify-self:stretch;
+    border: 1px solid white;
+    margin-bottom: 5px;
+    height: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .buttonLink{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  .containerBuscar{
+    
+    margin-left:0px ;
+    margin-right: 0px;
+  }
+
+}

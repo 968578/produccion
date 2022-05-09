@@ -21,7 +21,7 @@ router.get('/get', verifyTokenGeneral ,(req, res)=>{
       conn.query(query, (error, results)=>{
         if(error) throw error
 
-        return res.send(results)
+        return res.json({msj:'Autorizado',results})
       })
       conn.release()
     })
@@ -57,17 +57,17 @@ router.post('/insert', verifyTokenGeneral ,(req,res)=>{
         conn.query(query, (error, results) => {
           if (error){
             if(error.errno === 1062){
-              return res.send('Confeccionista ya existe')
+              return res.json({msj:'Confeccionista ya existe'})
             }
             throw error
           } 
-          res.send('Confeccionista agregado con exito')
+          res.json({msj:'Confeccionista agregado con exito'})
         })
         conn.release()
       })
       // res.send('oki')
     }else{
-      res.send('Falta nombre o contraseña')
+      res.msj({msj:'Falta nombre o contraseña'})
     }
 
   } catch (error) {
@@ -79,7 +79,6 @@ router.post('/insert', verifyTokenGeneral ,(req,res)=>{
 
 router.post('/login', (req,res)=>{
   const {nombre, password} = req.body
-  console.log(nombre, password)
 
   try {
 
@@ -98,10 +97,10 @@ router.post('/login', (req,res)=>{
               const token = jwt.sign({nombre:results[0].nombre}, process.env.SECRET)
               return res.json({msj:'Contraseña correcta', token, rol:results[0].rol})
             }else{
-              return res.send('contraseña incorrecta')
+              return res.json({msj:'contraseña incorrecta'})
             }
           }else{
-            res.send('No estas Registrado')
+            res.json({msj:'No estas Registrado'})
           }
         })
         conn.release()
@@ -109,7 +108,7 @@ router.post('/login', (req,res)=>{
       })
 
     }else{
-      return res.send('Falta un dato')
+      return res.json({msj:'Falta un dato'})
     }
     
   } catch (error) {
@@ -129,7 +128,7 @@ router.delete('/delete', (req,res)=>{
 
       conn.query(query, (error, results)=>{
         if(error) throw error
-        res.send('Confeccionista Eliminado con exito')
+        res.json({msj:'Confeccionista Eliminado con exito'})
       })
     })
 

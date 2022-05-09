@@ -1,0 +1,194 @@
+.containerDetails{
+  margin: 0 5% 0 5%;
+  border: solid black 1px;
+  margin-top: 20px;
+  padding: 0 5px 5px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px black;
+  background-image: linear-gradient(to right top, #74747e, #848694, #929aa9, #a0adc0, #aec2d6);
+}
+
+.containerHomeButton{
+  background-color: #211f23;
+}
+
+
+.containerHomeButton > a{
+  color: whitesmoke;
+  font-family: 'Lato', sans-serif;
+  border: none;
+}
+
+.containerHomeButton > a:hover{
+  box-shadow: 3px 3px 10px white;
+}
+
+.EditarEliminar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+
+.containerEditar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 2px 3px;
+  border-radius: 3px;
+  margin: 8px 0  0 8px;
+  font-family: 'Lato', sans-serif;
+  border: solid 1px black;
+  
+}
+
+.containerEditar:hover{
+  box-shadow: 3px 3px 10px #2980b9;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.containerEliminar{
+  display: flex;
+  flex-direction: row;
+  border: solid black 1px;
+  align-items: center;
+  padding: 0 3px 2px 3px;
+  border-radius: 3px;
+  margin: 8px 8px 0 0;
+  font-family: 'Lato', sans-serif;
+}
+
+.containerEliminar:hover{
+  box-shadow: 3px 3px 10px #c0392b;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.X{
+  background-color: #c0392b;
+  height: 15px;
+  width: 15px;
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+
+.L{
+  background-color: #2980b9;
+  height: 15px;
+  width: 15px;
+  clip-path: polygon(0 75%, 75% 0, 100% 25%, 25% 100%, 0 100%);
+}
+
+.detailTitle{
+  background-color: #30475E;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+.detailDuo{
+  display: grid;
+  grid-template-columns: 1fr;
+
+}
+.detailDuo > div{
+  justify-self: center;
+}
+
+.detailDuoHeaderTitle{
+  font-family: 'Lato', sans-serif;
+  color: #808e9b;
+}
+
+.detailDuoHeaderValue{
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+  color:#d2dae2;
+}
+
+.detailDuoTitle{
+  font-family: 'Lato', sans-serif;
+}
+
+.detailDuoValue{
+  /* background-color: red; */
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+}
+.containerAllDetails{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 25px;
+}
+
+.titleSiAuditoria{
+  font-family: 'Fredoka', sans-serif;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.confirmEliminado{
+  border-radius: 3px;
+  width: 150px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 3px 2px 5px 3px ;
+  background-color: #da0039;
+  color: white;
+}
+
+.containerLeft{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: 1fr auto ;
+  gap: 10px;
+  
+
+}
+
+.containerRight{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 10px;
+}
+
+.containerRight > div{
+  border: solid 1px black;
+  border-radius: 5px;
+  
+}
+
+.containerStart{
+  border: solid 1px black;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .containerAllDetails{
+  
+    grid-template-columns: 1fr;
+  }
+
+  .detailDuoHeaderValue{
+    font-size: 14px;
+  }
+
+  .detailDuoHeaderTitle{
+    font-size: 12px;
+  }
+
+  .detailDuoTitle{
+    font-size: 11px;
+  }
+
+  .detailDuoValue{
+    font-size: 14px;
+  }
+}
+
+

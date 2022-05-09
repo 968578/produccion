@@ -2,17 +2,103 @@
   width: max-content;
   border: 1px solid black;
   margin: 0 auto;
+  padding: 0 5px 2px 5px;
+  border-radius: 3px;
 }
 
 .generatePassword:hover{
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 3px 3px 10px #f0f0f0;
   cursor: pointer;
 
+}
+
+.password{
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+  color: #f0f0f0;
+}
+
+.b-inactive{
+  width: max-content;
+  color: gray;
+  border: 1px solid gray;
+  margin: 0 auto;
 }
 
 .containerAddConfe{
   /* position: fixed;
   top: 20%;
   left: 35%; */
+  overflow: hidden;
 
+}
+
+.c-addConfeAndConfirm{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: max-content;
+  justify-content: center;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+.formConfe > label{
+  /* background-color: red; */
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+}
+
+#nombreAddConfe{
+  /* background-color: red; */
+  /* height: 20px; */
+  font-size: 18px;
+  border-radius: 3px;
+}
+
+.checkBox{
+  height: 17px;
+  width: 17px;
+}
+
+.checkBoxSi{
+  justify-self: end;
+
+}
+
+.checkBoxNo{
+  justify-self: start;
+}
+
+.c-siOrNoAudit{
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  gap: 10px ;
+
+}
+
+.c-siOrNoAudit label{
+  font-family: 'League Spartan', sans-serif;
+  font-size: 20px;
+}
+
+.confeCreado{
+  
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
+
+.confirmAddConfe{
+  background-color: #FFDD93;
+  color: #30475E;
+  width: max-content;
+  margin: auto;
+  padding: 3px 5px 4px 5px;
+  border-radius: 3px;
+  font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (max-width: 600px) {
+  .c-addConfeAndConfirm{
+    grid-template-columns: 1fr;
+  }
 }

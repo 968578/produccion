@@ -2,3 +2,19 @@
   display: grid;
   grid-template-columns: 1fr;
 }
+
+.c-titleTusLotes{
+  background-color: #211f23;
+  margin: auto;
+  width: max-content;
+  padding: 0 40px 0 40px;
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+  
+}
+
+.c-titleTusLotes > h2{
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 25px;
+  
+}

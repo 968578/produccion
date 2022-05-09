@@ -1,0 +1,27 @@
+.c-titleNoAuditdos{
+  background-color: #211f23;
+  margin: auto;
+  width: min-content;
+  padding: 0 50px 0 25px;
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
+
+.c-titleNoAuditdos > h2{
+  color: #da0039;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 25px;
+}
+
+.c-titleSiAuditdos{
+  background-color: #211f23;
+  margin: auto;
+  width: min-content;
+  padding: 0 50px 0 25px;
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
+
+.c-titleSiAuditdos > h2{
+  color: #0076a8;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 25px;
+}

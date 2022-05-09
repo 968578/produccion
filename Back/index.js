@@ -1,6 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+require('dotenv').config()
 
 
 
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 
+
 app.use('/lotes', lotesController)
 
 app.use('/auditorias', auditoriasController)
@@ -24,7 +26,7 @@ app.use('/confeccionistas', confeccionistasController)
 app.use('/usuarios', usuariosController)
 
 
-const port = 3000
+const port =  process.env.PORTSERVER || 3000 
 
 app.listen(port, ()=>{
   console.log('puerto '+ port)

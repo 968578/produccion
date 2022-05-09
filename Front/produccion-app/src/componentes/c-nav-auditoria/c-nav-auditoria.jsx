@@ -1,5 +1,7 @@
-import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+
+import './c-nav-auditoria.css'
 
 import {
   searchLoteName,
@@ -8,18 +10,25 @@ import {
 
 const NavAuditoria = () => {
 
-  const allLotes = useSelector(state => state.AllLotes)
-
   const [inputOp, setInputOp] = useState('')
 
+  const allLotes = useSelector(state => state.AllLotes)
   const dispatch = useDispatch()
 
-  const changeInput =(e)=>{
+
+  const changeInput = (e) => {
     setInputOp(e.target.value)
   }
 
-  const searchOp=()=>{
+
+  const searchOp = () => {
     dispatch(searchLoteName(allLotes, inputOp))
+  }
+
+
+  const closeSession = () => {
+    window.localStorage.removeItem('accessTokenAuditoria')
+    window.location.href = '/'
   }
 
 
@@ -31,6 +40,10 @@ const NavAuditoria = () => {
         <input type="text" placeholder='op' onChange={changeInput} />
         <div onClick={searchOp}>Buscar</div>
       </div>
+      <div className='containerButtons'>
+        <div className='closeSession closeSessionAuditoria' onClick={closeSession}>Cerrar Sesion</div>
+      </div>
+
 
     </div>
   )

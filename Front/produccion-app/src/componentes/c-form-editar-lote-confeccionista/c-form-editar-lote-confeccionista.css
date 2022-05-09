@@ -1,0 +1,120 @@
+.c-actualizarLote{
+  display: grid;
+  grid-column: 1fr;
+  width: 400px;
+  margin: auto;
+  
+}
+
+.c-editLoteConfe{
+  margin-bottom: 50px;
+}
+
+.c-dosInputs{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+.inputSolo{
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.inputSolo > input{
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 3px;
+  height: 25px;
+}
+
+.listEstado{
+  font-size: 17px;
+    border: 1px solid black;
+    border-radius: 3px;
+    height: 25px;
+    
+}
+
+.inputSolo > textarea{
+  
+  font-size: 17px;
+  height: 50px;
+}
+
+.b-updateLoteConfe{
+  font-size: 20px;
+  border: solid 1px black;
+  border-radius: 3px;
+  width: max-content;
+  padding: 0 7px 3px 7px;
+  margin: auto;
+}
+
+.b-updateLoteConfe:hover{
+  box-shadow: 3px 3px 10px white;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.c-editLoteConfe{
+  margin-top: 30px;
+}
+
+.titleEditLoteConfe{
+
+  font-size: 19px;
+  font-family: 'Lato', sans-serif;
+}
+
+.ConfirmUpdateloteFromConfe{
+  border-radius: 3px;
+  width: max-content;
+  margin: auto;
+  margin-top: 10px;
+  padding: 3px 2px 5px 3px ;
+  background-color: #2980b9;
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .inputSolo{
+    margin-right: 10px;
+  }
+
+  .inputSolo > label{
+    margin-right: 10px;
+    font-size: 14px;
+  }
+
+  .inputSolo > input{
+
+    width: 150px;
+  }
+
+  .listEstado{
+
+    width: 150px;
+  }
+
+  .inputSolo > textarea{
+    width: 150px;
+  }
+
+  .c-dosInputs{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .c-actualizarLote{
+    margin: auto;
+    width: max-content;
+    
+  }
+
+
+  
+  
+}

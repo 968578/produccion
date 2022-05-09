@@ -1,0 +1,53 @@
+.containerAllLotesParo{
+  background-color: #30475E;
+  margin: 50px 5% 0 5%;
+  border-radius: 20px;
+  padding-top: 5px;
+  padding-bottom: 30px;
+
+  
+}
+
+.c-lotesParo{
+  background-color: #30475E;
+  max-height: 28rem;
+  margin: 0px 3% 0 3%;
+    max-height: 28rem;
+    background-color: #30475E;
+    /* background-color: red; */
+    overflow-y: auto;
+    overflow-x: hidden;
+  
+}
+
+.c-lotesParo::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.c-lotesParo::-webkit-scrollbar:vertical {
+  width:5px;
+}
+.c-lotesParo::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+  display: none;
+} 
+
+.c-lotesParo::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+}
+
+.c-titleParo{
+  
+  margin: auto;
+  background-color: #da0039;
+  width: min-content;
+  padding: 0 20px 0 20px;
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+  
+}
+
+.c-titleParo h2{
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 25px;
+}

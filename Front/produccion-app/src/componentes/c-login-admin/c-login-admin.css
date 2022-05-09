@@ -1,0 +1,72 @@
+.containerLogin {
+  max-width: 250px;
+  overflow: hidden;
+  justify-self: center;
+  padding-bottom: 30px;
+}
+
+.containerLogin>form {
+  width: 250px;
+
+}
+
+.nombreLogin {
+
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+}
+
+.btn-loginConfeccionista {
+  width: max-content;
+  font-size: 20px;
+  border-radius: 3px;
+  margin: auto;
+  margin-top: 10px;
+  background-color: transparent;
+}
+
+.btn-loginConfeccionista:hover {
+  box-shadow: 3px 3px 10px white;
+  cursor: pointer;
+}
+
+.inputLogin {
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.errorLogin {
+  background-color: red;
+  color: white;
+  font-size: 18px;
+  padding: 4px 5px  ;
+  width: max-content;
+  margin: auto;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width : 1023px) {
+  .containerLogin {
+    max-width: 180px;
+  }
+
+  .containerLogin>form {
+    width: 180px;
+  }
+
+  .nombreLogin {
+    font-size: 18px;
+  }
+
+  .btn-loginConfeccionista {
+    font-size: 18px;
+    margin-top: 5px;
+
+  }
+
+  .inputLogin {
+    font-size: 18px;
+    width: 172px;
+  }
+}

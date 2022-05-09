@@ -1,5 +1,5 @@
 .c-section{
-  border: 1px solid #000;
+  border: 3px solid #30475E;
   height: 250px;
   width: 250px;
   justify-self: center;
@@ -7,26 +7,78 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #000;
+  background-color: white;
   
 }
 
+.c-ladingPage > h1{
+  background-color: #211f23;
+  color: white;
+  margin: 0;
+  height: 4rem;
+  font-family: 'Fredoka', sans-serif;
+  padding-top: 10px;
+}
+
 .c-section:hover{
-  background-color: #ecf0f1;
+  cursor: pointer;
 }
 
 .c-section > h4{
   margin: 0;
+  font-family: 'Roboto', sans-serif;;
   
 }
 
 .c-sections{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin: 15% 20% 0 20%;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 10% 10% 0 10%;
   
+}
+
+.c-ladingPage{
+
+  min-height: 99vh;
+  height: 100%;
+
+  background: #BBD2C5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #292E49, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #292E49, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 2 6+, Opera 12+, Safari 7+ */
+  padding-bottom: 30px;
+
 }
 
 .c-sections > a{
   text-decoration: none;
   color: #000;
+}
+
+.c-mayorSection{
+  justify-self: center;
+
+}
+
+
+
+@media screen and (max-width : 1023px) {
+  .c-section{
+    height: 180px;
+    width: 180px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .c-sections{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin: 10% 10% 0 10%;
+  }
+
+  .c-section{
+    height: 180px;
+    width: 180px;
+  }
 }

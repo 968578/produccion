@@ -90,18 +90,16 @@ router.post('/insert',verifyTokenGeneral, (req, res) => {
       conn.query('COMMIT;', (error, results) => {
         if (error) throw error
         conn.release()
-        res.send('Auditoria Guardada con exito')
+        res.json({msj:'Auditoria Guardada con exito'})
       })
 
     })
-
 
   } catch (error) {
     console.log(error)
   }
 
 })
-
 
 
 // esta ruta es para guardar auditorias desde el confeccionista
@@ -190,7 +188,7 @@ router.post('/insert-from-confeccionista', verifyTokenConfeccionista ,(req,res)=
       conn.query('COMMIT;', (error, results) => {
         if (error) throw error
         conn.release()
-        res.send('Auditoria Guardada con exito')
+        res.json({msj:'Auditoria Guardada con exito'})
       })
 
     })
@@ -200,7 +198,6 @@ router.post('/insert-from-confeccionista', verifyTokenConfeccionista ,(req,res)=
     console.log(error)
   }
 })
-
 
 
 //para eliminar auditorias
@@ -225,10 +222,10 @@ router.delete('/delete', verifyTokenGeneral ,(req, res) => {
           const queryUpdateAuditado = `UPDATE lotes SET auditado = ${false} WHERE op = '${op}';`
           conn.query(queryUpdateAuditado, (error, results) => {
             if (error) throw error
-            res.send('Auditoria ELiminada')  
+            res.json({msj:'Auditoria ELiminada'})  
           })
         }else{
-          res.send('Auditoria ELiminada')
+          res.json({msj:'Auditoria ELiminada'})
         }
       })
       conn.release()

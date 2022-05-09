@@ -1,0 +1,24 @@
+.c-loginConfeccionista{
+  width: 250px;
+  display: grid;
+  grid-template-columns: auto;
+  margin: 0 auto;
+  margin-top: 50px;
+  
+}
+
+@media screen and (max-width : 1023px) {
+  .c-loginConfeccionista{
+    width: 180px;
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .c-loginConfeccionista{
+    margin-top: 20px;
+    
+  }
+}
+
+

@@ -12,29 +12,29 @@ require('dotenv').config()
 
 // use este codigo para añadir el admin, auditoria y cedi solo se usara una vez
 // toca eliminarlo cuando se desplegue la app para no poder crear usuarios
-router.post('/insertUser',(req,res)=>{
-  const {user_name, password, rol} = req.body
-  try {
+// router.post('/insertUser',(req,res)=>{
+//   const {user_name, password, rol} = req.body
+//   try {
 
-    const salt = bcrypt.genSaltSync(10)
-    const hash = bcrypt.hashSync(password, salt )
+//     const salt = bcrypt.genSaltSync(10)
+//     const hash = bcrypt.hashSync(password, salt )
     
-    const query =  `INSERT INTO usuarios (user_name, password, rol) VALUES('${user_name}', '${hash}', '${rol}')`
+//     const query =  `INSERT INTO usuarios (user_name, password, rol) VALUES('${user_name}', '${hash}', '${rol}')`
 
-    pool.getConnection((err, conn) => {
-      if (err) throw err
+//     pool.getConnection((err, conn) => {
+//       if (err) throw err
 
-      conn.query(query, (error, results) => {
-        if (error) throw error
+//       conn.query(query, (error, results) => {
+//         if (error) throw error
 
-      })
-      conn.release()
-    })
-    res.send('oki')
-  } catch (error) {
+//       })
+//       conn.release()
+//     })
+//     res.send('oki')
+//   } catch (error) {
     
-  }
-})
+//   }
+// })
 
 // esta ruta es para logearse
 // ruta /usuarios
@@ -57,16 +57,16 @@ router.post('/login',(req,res)=>{
               const token = jwt.sign({nombre:results[0].nombre, rol:results[0].rol}, process.env.SECRET)
               return res.json({msj:'Contraseña correcta', token})
             }else{
-              return res.send('Contraseña Incorrecta')
+              return res.json({msj:'Contraseña Incorrecta'})
             }
           }else{
-            res.send('No estas Registrado')
+            res.json({msj:'No estas registrado'})
           }
         })
         conn.release()
       })
     }else{
-      res.send('Falta un dato')
+      res.json({msj:'Faltan Datos'})
     }
   } catch (error) {
     

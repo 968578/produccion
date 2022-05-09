@@ -1,47 +1,88 @@
-import axios from 'axios'
 import { useState } from 'react'
+
+import axios from 'axios'
+import { AnimatePresence, motion } from 'framer-motion'
+
 import './c-confeccionista.css'
 
-const Confeccionista=(props)=>{
 
-  const [confirmDelete, setConfirmDelete]=useState(false)
+const variantsConfirmDelete = {
+  hidden: {
+    scale: 0,
+    transition: {
+      duration: 0.5
+    }
+  },
+  show: {
+    scale: 1,
+    transition: {
+      duration: 0.5
+    }
+  }
+}
 
-  // console.log(props.data.nombre)
 
-  const deleteConfeccionista=()=>{
-    axios.delete()
+const Confeccionista = (props) => {
+
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [confirmationDelete, setConfirmationDelete] = useState('')
+
+  const deleteConfeccionista = () => {
+    const token = window.localStorage.getItem('accessTokenAdmin')
+    const nombre = {
+      nombre: props.data.nombre
+    }
+    axios.delete(`${process.env.REACT_APP_API_URL}/confeccionistas/delete`, {
+      params: nombre,
+      headers: {
+        'authorization': 'Barrer ' + token
+      }
+    })
+      .then(r => {
+        setConfirmationDelete(r.data.msj)
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+      })
 
   }
 
-  const modalConfirmDelete=()=>{
 
-  }
+  return (
+    <div>
+      
+      <div  className='confeccionista'>
+        <div>
+          {
+            props.data &&
+            <div className='c-data-confe' >
+              <div>
+                <div className='nameConfeccionista'>{props.data.nombre}</div>
+              </div>
+              <div onClick={() => setConfirmDelete(!confirmDelete)} className='c-deleteConrfeccionista'>
+                <div  className='X-confeccionista'>
+                </div>
+              </div>
+            </div>
 
-  return(
-    <div className='confeccionista'>
-      <div>
+          }
+
+        </div>
+        <AnimatePresence>
+          {
+            confirmDelete &&
+            <motion.div className='confirmDeleteConfe' exit='hidden' animate='show' initial='hidden' variants={variantsConfirmDelete}>
+              <div>¿Eliminar?</div>
+              <button onClick={deleteConfeccionista} >Aceptar</button>
+              <button onClick={() => setConfirmDelete(!confirmDelete)}>Cancelar</button>
+            </motion.div>
+          }
+        </AnimatePresence>
         {
-          props.data &&
-          <div  className='c-data-confe' >
-            <div>
-              <div>{props.data.nombre}</div>
-            </div>
-            <div onClick={()=>setConfirmDelete(!confirmDelete)} className='X-confeccionista'>
-
-            </div>
-          </div>
-
+          confirmationDelete !== '' && <motion.div className='confirmationDeleteConfe' exit='hidden' animate='show' initial='hidden' variants={variantsConfirmDelete}>{confirmationDelete}</motion.div>
         }
-
       </div>
-      {
-          confirmDelete &&
-          <div>
-            <div>Eliminar?</div>
-            <button>Aceptar</button>
-            <button>Cancelar</button>
-          </div>
-        }
+
     </div>
   )
 }

@@ -1,31 +1,26 @@
-import { useEffect, useState } from "react"
-import axios from 'axios'
-
-import {
-  loadAllLotes,
-  loadShowLotes
-  } from '../../redux/actions/actions'
-import { useDispatch, useSelector } from "react-redux"
-
+import { useSelector } from "react-redux"
 
 import LoteAuditoria from "../c-lote-auditoria/c-lote-auditoria"
 
 
-const LotesSiAuditados=()=>{
+const LotesSiAuditados = () => {
 
   const lotes = useSelector(state => state.ShowLotes)
 
 
-  return(
-    <div >
-      <h2>Si Auditados</h2>
+  return (
+    <div className="c-lotesActivos" >
+      <div className="c-titleSiAuditdos">
+        <h2>Si Auditados</h2>
+
+      </div>
       <div className="containerAllLotes">
-      {
-        lotes && lotes.map(e=>
-          e.auditado == true &&
-          <LoteAuditoria key={e.op} showLote={e} />
+        {
+          lotes && lotes.map((e, i) =>
+            e.auditado == true &&
+            <LoteAuditoria key={e.op} showLote={e} index={i} />
           )
-      }
+        }
       </div>
     </div>
   )

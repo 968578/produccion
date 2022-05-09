@@ -10,7 +10,6 @@ const verifyTokenConfeccionista=(req, res, next)=>{
     if(err){
       res.send('token invalido')
     }  else{
-      console.log(data)
       req.user = data
       next()
     }
@@ -22,7 +21,6 @@ const verifyTokenConfeccionista=(req, res, next)=>{
 // para mostrar los lotes verifica el token de admin, auditoria y cedi
 const verifyTokenGeneral=(req,res, next)=>{
 
-  console.log(req.headers['authorization'])
   if(req.headers['authorization']){
     const token = req.headers['authorization'].split(' ')[1]
   
@@ -30,6 +28,7 @@ const verifyTokenGeneral=(req,res, next)=>{
       if(err){
         res.send('token invalido')
       }  else{
+
         if(data.rol === 'Admin'|| data.rol === 'Auditoria' || data.rol === 'CEDI'){
           next()
         } else{

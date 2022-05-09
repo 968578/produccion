@@ -1,27 +1,28 @@
-
 import { useState } from "react"
 
+import './c-nav-confeccionista.css'
 
 
 const NavConfeccionista = (props) => {
 
-
   const [inputOp, setInputOp] = useState('')
 
 
-  const changeInput =(e)=>{
+  const changeInput = (e) => {
     setInputOp(e.target.value)
   }
 
-  const searchOp=()=>{
-    // console.log(inputOp)
+
+  const searchOp = () => {
     props.searchLote(inputOp)
   }
 
-  const closeSession=(e)=>{
+
+  const closeSession = (e) => {
     e.preventDefault()
-    window.localStorage.removeItem('accessToken')
-    window.location.href='/login-confeccionista'
+    window.localStorage.removeItem('accessTokenConfeccionista')
+    window.localStorage.removeItem('rol')
+    window.location.href = '/'
   }
 
 
@@ -32,7 +33,9 @@ const NavConfeccionista = (props) => {
         <input type="text" placeholder='op' onChange={changeInput} />
         <div onClick={searchOp}>Buscar</div>
       </div>
-      <button onClick={closeSession}>Cerrar sesion</button>
+      <div className='containerButtons'>
+        <div className="closeSessionConfe" onClick={closeSession}>Cerrar sesion</div>
+      </div>
 
     </div>
   )

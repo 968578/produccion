@@ -1,41 +1,27 @@
-import { useEffect, useState } from "react"
-import axios from 'axios'
+import { useSelector } from "react-redux"
 
-import {
-  loadAllLotes,
-  loadShowLotes
-  } from '../../redux/actions/actions'
-import { useDispatch, useSelector } from "react-redux"
-
+import './c-lotes-noAuditados-auditoria.css'
 
 import LoteAuditoria from "../c-lote-auditoria/c-lote-auditoria"
 
 
-const LotesNoAuditados=()=>{
+const LotesNoAuditados = () => {
 
   const lotes = useSelector(state => state.ShowLotes)
-  const dispatch = useDispatch()
-  
-
-  useEffect(()=>{
-    axios.get('http://localhost:3000/lotes/get')
-    .then(r =>{
-      dispatch(loadAllLotes(r.data))
-      dispatch(loadShowLotes(r.data))
-    }  )
-  },[])
 
 
-  return(
-    <div >
-      <h2>No Auditados</h2>
+  return (
+    <div className="c-lotesActivos">
+      <div className="c-titleNoAuditdos">
+        <h2>No Auditados</h2>
+      </div>
       <div className="containerAllLotes">
-      {
-        lotes && lotes.map(e=>
-          e.auditado == false &&
-          <LoteAuditoria key={e.op} showLote={e} />
+        {
+          lotes && lotes.map((e, i) =>
+            e.auditado == false &&
+            <LoteAuditoria key={e.op} showLote={e} index={i} />
           )
-      }
+        }
       </div>
     </div>
   )

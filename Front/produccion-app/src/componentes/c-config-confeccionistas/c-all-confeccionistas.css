@@ -1,0 +1,25 @@
+.c-confeccionistas{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* justify-self: center;
+  align-self: center; */
+  margin: 0 15% 10% 15%;
+  border-radius: 10px;
+  column-gap: 10px;
+  padding: 50px;
+  background-image: linear-gradient(to right top, #74747e, #848694, #929aa9, #a0adc0, #aec2d6);
+
+}
+
+.titleConfigConfeccionista{
+  font-family: 'Fredoka', sans-serif;
+}
+
+
+@media screen and (max-width: 600px) {
+  .c-confeccionistas{
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 5% 10% 5%;
+    padding: 10px;
+  }
+}

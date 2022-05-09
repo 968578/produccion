@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux"
 import Lote from "../c-lote/c-lote"
+import './c-lotes-paro.css'
 
 const LotesParo=()=>{
 
@@ -8,13 +9,15 @@ const LotesParo=()=>{
 
 
   return (
-    <div >
-      <h2>Lotes en Paro</h2>
-      <div className="containerAllLotes">
+    <div className="containerAllLotesParo" >
+      <div className="c-titleParo">
+        <h2>Paro</h2>
+      </div>
+      <div className="c-lotesParo">
       {
-        lotes && lotes.map(e=>
+        lotes && lotes.map((e,i)=>
           e.estado ==='Paro' &&
-          <Lote key={e.op} showLote={e} />
+          <Lote key={e.op} showLote={e} index={i} />
           )
       }
       </div>
