@@ -6,12 +6,13 @@
 
 .confirmUpdateLote{
   border-radius: 3px;
-  width: 150px;
+  width: max-content;
   margin: 0 auto;
   margin-top: 10px;
   padding: 3px 2px 5px 3px ;
   background-color: #2980b9;
   color: white;
+  font-size: 20px;
 }
 
 .cancelEdit{

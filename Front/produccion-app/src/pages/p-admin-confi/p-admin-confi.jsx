@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import AllConfeccionistas from "../../componentes/c-config-confeccionistas/c-all-confeccionistas"
+import LotesInactivos from "../../componentes/c-lotes-inactivos/c-lotes-inactivos"
 
 
 const AdminConfi = () => {
@@ -22,6 +23,7 @@ const AdminConfi = () => {
         </Link>
       </div>
       <AllConfeccionistas />
+      <LotesInactivos />
     </div>
   )
 }

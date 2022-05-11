@@ -9,7 +9,7 @@ import FormConfeccionista from "../../componentes/c-form-confeccionista/c-form-c
 
 
 const HomeAdmin = () => {
-  console.log(process.env)
+  
   const [activeAddConfe, setActiveAddConfe] = useState(false)
 
   const addConfeccionista = () => {
@@ -21,7 +21,6 @@ const HomeAdmin = () => {
       window.location.href = '/'
     }
   }, [])
-
 
 
   return (

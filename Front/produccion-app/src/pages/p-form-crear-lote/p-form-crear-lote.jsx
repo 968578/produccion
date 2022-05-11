@@ -368,16 +368,16 @@ const FormLotes = () => {
                 <label className='titleCrearLote'>Estado</label> <br />
                 <select id='listestado' ref={refEstado} name='estado' onChange={changeInput} >
                   <option value="">Escoge Estado</option>
-                  <option value="Paro">Paro</option>
-                  <option value="Recepcion">Recepcion</option>
-                  <option value="Preparacion">Preparacion</option>
-                  <option value="Confeccion">Confeccion</option>
-                  <option value="Terminacion">Terminacion</option>
                   <option value="Corte">Corte</option>
                   <option value="Lote Integracion">Lote Integracion</option>
                   <option value="Para Asignar">Para Asignar</option>
+                  <option value="Recepcion">Recepcion</option>
+                  <option value="Preparacion">Preparacion</option>
+                  <option value="Confeccion">Confeccion</option>
                   <option value="Lavanderia">Lavanderia</option>
+                  <option value="Terminacion">Terminacion</option>
                   <option value="Liberado">Liberado</option>
+                  <option value="Paro">Paro</option>
                 </select>
               </div>
               <div>

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
-import axios from 'axios'
 import { useParams } from "react-router-dom";
-import './c-form-editar-lote.css'
+
+import axios from 'axios'
 import { motion, AnimatePresence } from "framer-motion";
+
+import './c-form-editar-lote.css'
+
 
 const variantsConfirmUpdate = {
   hidden: {
@@ -36,7 +39,6 @@ const EditarLote = (props) => {
   const [confirmUpdate, setConfirmUpdate] = useState('')
   const [confeccionistas, setConfeccionistas] = useState([])
 
-
   const [input, setInput] = useState({
     op: '',
     referencia: '',
@@ -58,7 +60,6 @@ const EditarLote = (props) => {
   })
 
   const [errors, setErrors] = useState({
-
   })
 
 
@@ -223,17 +224,22 @@ const EditarLote = (props) => {
       }
     })
       .then(r => {
-
-        if (r.data.msj === 'Actualizado con exito') {
+        console.log(r.data)
+        if (r.data.msj === 'Lote actualizado con exito') {
           setConfirmUpdate(r.data.msj)
           window.scrollTo(0, document.body.scrollHeight);
           setTimeout(() => {
             window.location.reload()
-          }, 1000)
+          }, 1300)
+        }else{
+          setConfirmUpdate(r.data.msj)
+          window.scrollTo(0, document.body.scrollHeight);
+          setTimeout(() => {
+            window.location.reload()
+          }, 4000)
         }
       })
   }
-
 
 
   useEffect(() => {
@@ -327,16 +333,17 @@ const EditarLote = (props) => {
                       <label className="titleEditLote">Estado</label> <br />
                       <select id='listestado' defaultValue={input.estado} name='estado' onChange={changeInput} >
                         <option value="">Escoge Estado</option>
-                        <option value="Paro">Paro</option>
-                        <option value="Recepcion">Recepcion</option>
-                        <option value="Preparacion">Preparacion</option>
-                        <option value="Confeccion">Confeccion</option>
-                        <option value="Terminacion">Terminacion</option>
                         <option value="Corte">Corte</option>
                         <option value="Lote Integracion">Lote Integracion</option>
                         <option value="Para Asignar">Para Asignar</option>
+                        <option value="Recepcion">Recepcion</option>
+                        <option value="Preparacion">Preparacion</option>
+                        <option value="Confeccion">Confeccion</option>
                         <option value="Lavanderia">Lavanderia</option>
+                        <option value="Terminacion">Terminacion</option>
                         <option value="Liberado">Liberado</option>
+                        <option value="Paro">Paro</option>
+                        <option value="Inactivo">Inactivo</option>
                       </select>
                     </div>
                     <div>
@@ -405,7 +412,7 @@ const EditarLote = (props) => {
               </form>
             </div>
             {
-              confirmUpdate && <motion.p animate='show' initial='hidden' variants={variantsConfirmUpdate} className="confirmUpdateLote">{confirmUpdate}</motion.p>
+              confirmUpdate  && <motion.p animate='show' initial='hidden' variants={variantsConfirmUpdate} className="confirmUpdateLote">{confirmUpdate}</motion.p>
             }
           </motion.div>
         }

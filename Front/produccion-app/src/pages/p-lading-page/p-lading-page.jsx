@@ -20,7 +20,7 @@ const variantsH1 = {
       duration: 5,
       ease: 'easeInOut',
       stiffness: 100,
-      damping: 10,
+      damping:10,
       type: 'spring',
     }
   }
@@ -30,22 +30,22 @@ const variantSubtitles = {
   hidden: {
     scale: 0
   },
-  show: i => ({
+  show:i=> ({
     scale: 1,
     transition: {
       type: 'spring',
       delay: i * 0.2
     },
   }),
-  hover: {
-    scale: 1.1,
-    transition: {
-      duration: 0.1
+  hover:{
+    scale:1.1,
+    transition:{
+      duration:0.1
     },
   },
-  tap: {
-    scale: 0.9,
-
+  tap:{
+    scale:0.9,
+  
   }
 }
 
@@ -78,7 +78,6 @@ const LadingPage = () => {
     }
 
   }
-
   const activarLoginConfe = () => {
     setActiveLoginConfe(!activeLoginConfe)
     setActiveLoginAuditoria(false)
@@ -94,8 +93,8 @@ const LadingPage = () => {
     setActiveLoginAuditoria(false)
     setActiveLoginAdmin(false)
     setActiveLoginConfe(false)
-    if (window.localStorage.getItem('accessTokenCedi')) {
-      window.location.href = '/home-cedi'
+    if(window.localStorage.getItem('accessTokenCedi')){
+      window.location.href= '/home-cedi'
     }
 
   }

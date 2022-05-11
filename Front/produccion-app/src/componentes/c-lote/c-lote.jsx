@@ -156,8 +156,6 @@ const Lote = (props) => {
         </Link>
       }
 
-
-
     </div>
   )
 }
