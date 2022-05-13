@@ -21,13 +21,13 @@ app.get('/api',(req,res)=>{
 
 
 
-app.use('api/lotes', lotesController)
+app.use('/api/lotes', lotesController)
 
-app.use('api/auditorias', auditoriasController)
+app.use('/api/auditorias', auditoriasController)
 
-app.use('api/confeccionistas', confeccionistasController)
+app.use('/api/confeccionistas', confeccionistasController)
 
-app.use('api/usuarios', usuariosController)
+app.use('/api/usuarios', usuariosController)
 
 
 const port =  process.env.PORTSERVER || 3000 
