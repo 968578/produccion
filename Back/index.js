@@ -19,6 +19,8 @@ app.get('/',(req,res)=>{
   res.send('holi')
 })
 
+
+
 app.use('/lotes', lotesController)
 
 app.use('/auditorias', auditoriasController)

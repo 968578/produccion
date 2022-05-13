@@ -40,7 +40,9 @@ require('dotenv').config()
 // ruta /usuarios
 router.post('/login',(req,res)=>{
   const {user_name, password} = req.body
-
+  console.log('user',user_name )
+  console.log('pass', password)
+  console.log('body', req.body)
   try {
     
     if(user_name && password){
@@ -69,7 +71,7 @@ router.post('/login',(req,res)=>{
       res.json({msj:'Faltan Datos'})
     }
   } catch (error) {
-    
+    console.log(error)
   }
 })
 
