@@ -15,19 +15,19 @@ app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 
-app.get('/',(req,res)=>{
+app.get('api/',(req,res)=>{
   res.send('holi')
 })
 
 
 
-app.use('/lotes', lotesController)
+app.use('api/lotes', lotesController)
 
-app.use('/auditorias', auditoriasController)
+app.use('api/auditorias', auditoriasController)
 
-app.use('/confeccionistas', confeccionistasController)
+app.use('api/confeccionistas', confeccionistasController)
 
-app.use('/usuarios', usuariosController)
+app.use('api/usuarios', usuariosController)
 
 
 const port =  process.env.PORTSERVER || 3000 
