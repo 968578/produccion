@@ -39,10 +39,7 @@ require('dotenv').config()
 // esta ruta es para logearse
 // ruta /usuarios
 router.post('/login',(req,res)=>{
-  const {user_name, password} = req.body
-  console.log('user',user_name )
-  console.log('pass', password)
-  console.log('body', req.body)
+  const {user_name, password, rol} = req.body
   try {
     
     if(user_name && password){
@@ -54,13 +51,19 @@ router.post('/login',(req,res)=>{
           if (error) throw error
 
           if(results.length > 0){
-            let confirmLogin = bcrypt.compareSync(password, results[0].password)
-            if(confirmLogin){
-              const token = jwt.sign({nombre:results[0].nombre, rol:results[0].rol}, process.env.SECRET)
-              return res.json({msj:'Contraseña correcta', token})
+            if (results[0].rol !== rol){
+              res.json({msj:'No puedes Entrar aqui'})
             }else{
-              return res.json({msj:'Contraseña Incorrecta'})
+              console.log('entra mal')
+              let confirmLogin = bcrypt.compareSync(password, results[0].password)
+              if(confirmLogin){
+                const token = jwt.sign({nombre:results[0].nombre, rol:results[0].rol}, process.env.SECRET)
+                return res.json({msj:'Contraseña correcta', token})
+              }else{
+                return res.json({msj:'Contraseña Incorrecta'})
+              }
             }
+
           }else{
             res.json({msj:'No estas registrado'})
           }

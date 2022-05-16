@@ -29,7 +29,8 @@ const LoginAdmin = (props) => {
 
   const [input, setInput] = useState({
     user_name: '',
-    password: ''
+    password: '',
+    rol:''
   })
 
   const [errorLogin, setErrorLogin] = useState('')
@@ -39,9 +40,7 @@ const LoginAdmin = (props) => {
   }
 
   const submitInput = (e) => {
-    console.log(input)
     e.preventDefault()
-    console.log(process.env.REACT_APP_API_URL)
     axios.post(`${process.env.REACT_APP_API_URL}/usuarios/login`, input)
       .then(r => {
         if (r.data.msj === 'Contraseña correcta') {
@@ -57,6 +56,11 @@ const LoginAdmin = (props) => {
   useEffect(() => {
     if (!props.active) {
       setErrorLogin('')
+      setInput({
+        user_name: '',
+        password: '',
+        rol:'Admin'
+      })
     }
   }, [props.active])
 

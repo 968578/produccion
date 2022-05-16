@@ -125,19 +125,27 @@ const ComponentDetailsLoteAuditoria = (props) => {
                 </div>
 
                 <div className="detailDuo">
-                  <div className="detailDuoTitle">Ciclo</div>
+                  <div className="detailDuoTitle">Ciclo Total</div>
                   <div className="detailDuoValue">
                     {
                       dataLocal.ciclo?.length === 1 ? dataLocal.ciclo[0].tipo === 'Confeccion' &&
-                        differenceInCalendarDays((dataLocal.ciclo[0].fecha_final !== null ?
-                          new Date(dataLocal.ciclo[0].fecha_final).setMinutes(300) :
-                          Date.now()), new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
-                        : dataLocal.ciclo?.length === 2 ? differenceInCalendarDays(Date.now(),
-                          new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
-                          : dataLocal.ciclo?.length === 3 ? differenceInCalendarDays((dataLocal.ciclo[2].fecha_final !== null ?
-                            new Date(dataLocal.ciclo[2].fecha_final).setMinutes(300) : Date.now()),
-                            new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
-                            : <div>-/-</div>
+                      differenceInCalendarDays((dataLocal.ciclo[0].fecha_final !== null ? 
+                        new Date(dataLocal.ciclo[0].fecha_final).setMinutes(300) :
+                        Date.now()), new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
+
+                      : dataLocal.ciclo?.length === 2 ? dataLocal.ciclo[1].tipo === 'Lavanderia' &&
+                      differenceInCalendarDays( Date.now(), new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300)) 
+
+                      || dataLocal.ciclo[1].tipo === 'Terminacion' &&
+                      differenceInCalendarDays((dataLocal.ciclo[1].fecha_final !== null ? 
+                        new Date(dataLocal.ciclo[1].fecha_final).setMinutes(300) :
+                        Date.now()), new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
+
+                      : dataLocal.ciclo?.length === 3 ? differenceInCalendarDays((dataLocal.ciclo[2].fecha_final !== null ? 
+                        new Date(dataLocal.ciclo[2].fecha_final).setMinutes(300): Date.now()), 
+                        new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
+                        
+                      : <div>-/-</div>
                     }
                   </div>
                 </div>
@@ -226,7 +234,7 @@ const ComponentDetailsLoteAuditoria = (props) => {
                   <div className="detailDuoTitle">Ciclos Lavanderia</div>
                   <div className="detailDuoValue">
                     {
-                      dataLocal.ciclo?.length > 1 ? dataLocal.ciclo[1].tipo === 'Lavanderia' &&
+                      dataLocal.ciclo?.length > 1 && dataLocal.ciclo[1].tipo === 'Lavanderia' ?
                         differenceInCalendarDays((dataLocal.ciclo[1].fecha_final !== null ?
                           new Date(dataLocal.ciclo[1].fecha_final).setMinutes(300) :
                           Date.now()), new Date(dataLocal.ciclo[1].fecha_inicio).setMinutes(300))
@@ -241,11 +249,17 @@ const ComponentDetailsLoteAuditoria = (props) => {
                   <div className="detailDuoTitle">Ciclos Terminacion</div>
                   <div className="detailDuoValue">
                     {
-                      dataLocal.ciclo?.length > 2 ? dataLocal.ciclo[2].tipo === 'Terminacion' &&
-                        differenceInCalendarDays((dataLocal.ciclo[2].fecha_final !== null ?
-                          new Date(dataLocal.ciclo[2].fecha_final).setMinutes(300) :
-                          Date.now()), new Date(dataLocal.ciclo[2].fecha_inicio).setMinutes(300))
-                        : <div>-/-</div>
+                      dataLocal.ciclo?.length === 2 ? dataLocal.ciclo[1].tipo === 'Terminacion' &&
+                      differenceInCalendarDays((dataLocal.ciclo[1].fecha_final !== null ? 
+                        new Date(dataLocal.ciclo[1].fecha_final).setMinutes(300) :
+                        Date.now()), new Date(dataLocal.ciclo[1].fecha_inicio).setMinutes(300))
+
+                      : dataLocal.ciclo?.length === 3 ? dataLocal.ciclo[2].tipo === 'Terminacion' &&
+                      differenceInCalendarDays((dataLocal.ciclo[2].fecha_final !== null ? 
+                        new Date(dataLocal.ciclo[2].fecha_final).setMinutes(300) :
+                        Date.now()), new Date(dataLocal.ciclo[2].fecha_inicio).setMinutes(300))
+                        
+                        :  <div>-/-</div>
                     }
                   </div>
                 </div>

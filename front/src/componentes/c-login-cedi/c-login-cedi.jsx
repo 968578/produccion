@@ -53,6 +53,11 @@ const LoginCedi = (props) => {
   useEffect(() => {
     if (!props.active) {
       setErrorLogin('')
+      setInput({
+        user_name: '',
+        password: '',
+        rol:'CEDI'
+      })
     }
   }, [props.active])
 

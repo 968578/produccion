@@ -108,7 +108,7 @@ router.post('/login', (req,res)=>{
       })
 
     }else{
-      return res.json({msj:'Falta un dato'})
+      return res.json({msj:'Faltan datos'})
     }
     
   } catch (error) {

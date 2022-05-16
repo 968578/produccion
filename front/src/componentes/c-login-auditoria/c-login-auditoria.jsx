@@ -37,7 +37,6 @@ const LoginAuditoria = (props) => {
   }
 
   const submitInput = (e) => {
-    console.log(input)
     e.preventDefault()
     axios.post(`${process.env.REACT_APP_API_URL}/usuarios/login`, input)
       .then(r => {
@@ -54,6 +53,11 @@ const LoginAuditoria = (props) => {
   useEffect(() => {
     if (!props.active) {
       setErrorLogin('')
+      setInput({
+        user_name: '',
+        password: '',
+        rol:'Auditoria'
+      })
     }
   }, [props.active])
 
