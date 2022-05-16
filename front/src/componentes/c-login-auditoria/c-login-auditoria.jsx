@@ -53,12 +53,12 @@ const LoginAuditoria = (props) => {
   useEffect(() => {
     if (!props.active) {
       setErrorLogin('')
-      setInput({
-        user_name: '',
-        password: '',
-        rol:'Auditoria'
-      })
     }
+    setInput({
+      user_name: '',
+      password: '',
+      rol:'Auditoria'
+    })
   }, [props.active])
 
 

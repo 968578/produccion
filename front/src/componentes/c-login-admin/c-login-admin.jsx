@@ -56,12 +56,13 @@ const LoginAdmin = (props) => {
   useEffect(() => {
     if (!props.active) {
       setErrorLogin('')
-      setInput({
-        user_name: '',
-        password: '',
-        rol:'Admin'
-      })
     }
+    setInput({
+      user_name: '',
+      password: '',
+      rol:'Admin'
+    })
+
   }, [props.active])
 
 
