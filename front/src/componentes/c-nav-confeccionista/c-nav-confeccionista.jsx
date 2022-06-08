@@ -27,7 +27,7 @@ const NavConfeccionista = (props) => {
 
 
   return (
-    <div className='navigation' >
+    <div className='navigationConfeccionista' >
 
       <div className='containerBuscar' >
         <input type="text" placeholder='op' onChange={changeInput} />

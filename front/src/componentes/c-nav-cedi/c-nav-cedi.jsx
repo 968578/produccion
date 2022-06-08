@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { searchLoteName } from "../../redux/actions/actions"
 
+import './c-nav-cedi.css'
+
 
 const NavCedi = () => {
 
@@ -30,7 +32,7 @@ const NavCedi = () => {
 
 
   return (
-    <div className='navigation'>
+    <div className='navigationCedi'>
 
       <div className='HomeButton'>Home</div>
       <div className='containerBuscar' >

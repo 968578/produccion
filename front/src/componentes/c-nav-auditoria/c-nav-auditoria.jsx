@@ -33,7 +33,7 @@ const NavAuditoria = (props) => {
 
 
   return (
-    <div className='navigation' >
+    <div className='navigationCedi' >
 
       <div className='HomeButton'>Home</div>
       <div className='containerBuscar' >

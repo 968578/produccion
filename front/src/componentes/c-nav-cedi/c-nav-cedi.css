@@ -1,0 +1,7 @@
+.navigationCedi{
+  display: grid;
+  padding-left: 10%;
+  padding-top: 20px;
+  background-color: #211f23;
+  grid-template-columns: auto auto auto;
+}

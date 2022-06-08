@@ -18,6 +18,14 @@
   background-color: #da0039;
 }
 
+.navigationConfeccionista{
+  display: grid;
+  padding-left: 10%;
+  padding-top: 20px;
+  background-color: #211f23;
+  grid-template-columns: auto auto;
+}
+
 @media screen and (max-width : 1023px) {
   .closeSessionConfe{
     width: 110px;

@@ -6,7 +6,7 @@ import './p-home-confeccionista.css'
 
 import LotesConfeccionista from "../../componentes/c-lotes-confeccionista/c-lotes-confeccionista"
 import NavConfeccionista from "../../componentes/c-nav-confeccionista/c-nav-confeccionista"
-import GraficoGeneralConfeccionista from "../../componentes/grafico-general-confeccionista/grafico-general-confeccionista"
+import GraficoGeneralConfeccionista from "../../componentes/c-grafico-general-confeccionista/c-grafico-general-confeccionista"
 
 
 const HomeConfeccionista = () => {

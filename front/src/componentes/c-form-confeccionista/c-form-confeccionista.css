@@ -27,9 +27,7 @@
 }
 
 .containerAddConfe{
-  /* position: fixed;
-  top: 20%;
-  left: 35%; */
+
   overflow: hidden;
 
 }
@@ -44,14 +42,11 @@
 }
 
 .formConfe > label{
-  /* background-color: red; */
   font-family: 'League Spartan', sans-serif;
   font-size: 20px;
 }
 
 #nombreAddConfe{
-  /* background-color: red; */
-  /* height: 20px; */
   font-size: 18px;
   border-radius: 3px;
 }
