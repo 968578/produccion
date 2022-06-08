@@ -45,7 +45,6 @@ const NavAuditoria = (props) => {
         <div onClick={props.activarExport}>Exportar Excel</div>
       </div>
 
-
     </div>
   )
 }
