@@ -42,6 +42,8 @@ const EditarLote = (props) => {
   const [input, setInput] = useState({
     op: '',
     referencia: '',
+    coleccion:'',
+    fecha_ingreso_cedi:'',
     tejido: '',
     tipo_producto: '',
     unidades: '',
@@ -85,6 +87,14 @@ const EditarLote = (props) => {
           }
         }
         break;
+
+        case 'coleccion':
+          for (let i = 0; i < value.length; i++) {
+            if (filtroGeneral.indexOf(value[i]) === -1) {
+              return document.getElementById('coleccion').value = input.coleccion
+            }
+          }
+          break;
 
       case 'tejido':
         for (let i = 0; i < value.length; i++) {
@@ -216,7 +226,7 @@ const EditarLote = (props) => {
     if (!activeButon) {
       return
     }
-    // console.log(input)
+    console.log(input)
     const token = window.localStorage.getItem('accessTokenAdmin')
     axios.put(`${process.env.REACT_APP_API_URL}/lotes/update`, input, {
       headers: {
@@ -231,7 +241,7 @@ const EditarLote = (props) => {
           setTimeout(() => {
             window.location.reload()
           }, 1300)
-        }else{
+        } else {
           setConfirmUpdate(r.data.msj)
           window.scrollTo(0, document.body.scrollHeight);
           setTimeout(() => {
@@ -306,31 +316,41 @@ const EditarLote = (props) => {
 
                   <div className="containerTwoInputs" >
                     <div>
-                      <label className="titleEditLote">Referencia <br /><input id='referencia' defaultValue={input.referencia} name='referencia' onChange={changeInput} type="text" /> </label>
+                      <label className="titleEditLote">Referencia <span className='asterisco'>*</span><br /><input id='referencia' defaultValue={input.referencia} name='referencia' onChange={changeInput} type="text" /> </label>
                     </div>
                   </div>
 
-                  <div className="containerTwoInputs">
+
+                  <div className="containerTwoInputs" >
                     <div className='itemIzquierdo'>
-                      <label className="titleEditLote">Tejido <br /><input id='tejido' defaultValue={input.tejido} name='tejido' onChange={changeInput} type="text" /> </label>
+                      <label className='titleEditLote'>Coleccion <span className='asterisco'>*</span><br /><input defaultValue={input.coleccion} id='coleccion'  name='coleccion' onChange={changeInput} type="text" /> </label>
                     </div>
                     <div>
-                      <label className="titleEditLote">Tipo producto <br /><input id='tipo_producto' defaultValue={input.tipo_producto} name='tipo_producto' onChange={changeInput} type="text" /> </label>
+                      <label className='titleEditLote'>Fecha Maxima Ingreso Cedi <span className='asterisco'>*</span><br /><input defaultValue={input.fecha_ingreso_cedi} id='fecha_ingreso_cedi'  name='fecha_ingreso_cedi' onChange={changeInput} type="date" /> </label>
                     </div>
                   </div>
 
                   <div className="containerTwoInputs">
                     <div className='itemIzquierdo'>
-                      <label className="titleEditLote">Unidades <br /><input id='unidades' defaultValue={input.unidades} name='unidades' onChange={changeInput} type="text" /> </label>
+                      <label className="titleEditLote">Tejido <span className='asterisco'>*</span><br /><input id='tejido' defaultValue={input.tejido} name='tejido' onChange={changeInput} type="text" /> </label>
                     </div>
                     <div>
-                      <label className="titleEditLote">Sam <br /><input id='sam' defaultValue={input.sam} name='sam' onChange={changeInput} type="text" /> </label>
+                      <label className="titleEditLote">Tipo producto <span className='asterisco'>*</span><br /><input id='tipo_producto' defaultValue={input.tipo_producto} name='tipo_producto' onChange={changeInput} type="text" /> </label>
                     </div>
                   </div>
 
                   <div className="containerTwoInputs">
                     <div className='itemIzquierdo'>
-                      <label className="titleEditLote">Estado</label> <br />
+                      <label className="titleEditLote">Unidades <span className='asterisco'>*</span><br /><input id='unidades' defaultValue={input.unidades} name='unidades' onChange={changeInput} type="text" /> </label>
+                    </div>
+                    <div>
+                      <label className="titleEditLote">Sam <span className='asterisco'>*</span><br /><input id='sam' defaultValue={input.sam} name='sam' onChange={changeInput} type="text" /> </label>
+                    </div>
+                  </div>
+
+                  <div className="containerTwoInputs">
+                    <div className='itemIzquierdo'>
+                      <label className="titleEditLote">Estado <span className='asterisco'>*</span></label> <br />
                       <select id='listestado' defaultValue={input.estado} name='estado' onChange={changeInput} >
                         <option value="">Escoge Estado</option>
                         <option value="Corte">Corte</option>
@@ -393,7 +413,7 @@ const EditarLote = (props) => {
 
                   <div className="containerTwoInputs">
                     <div className='itemIzquierdo'>
-                      <label className="titleEditLote">Valor Unidad <br /><input defaultValue={input.valor_unidad} placeholder='$' id='valor_unidad' name='valor_unidad' onChange={changeInput} type="text" /> </label>
+                      <label className="titleEditLote">Valor Unidad <span className='asterisco'>*</span><br /><input defaultValue={input.valor_unidad} placeholder='$' id='valor_unidad' name='valor_unidad' onChange={changeInput} type="text" /> </label>
                       {
                         input.valor_unidad && <p className='helps'>{new Intl.NumberFormat().format(input.valor_unidad)}$</p>
                       }
@@ -412,7 +432,7 @@ const EditarLote = (props) => {
               </form>
             </div>
             {
-              confirmUpdate  && <motion.p animate='show' initial='hidden' variants={variantsConfirmUpdate} className="confirmUpdateLote">{confirmUpdate}</motion.p>
+              confirmUpdate && <motion.p animate='show' initial='hidden' variants={variantsConfirmUpdate} className="confirmUpdateLote">{confirmUpdate}</motion.p>
             }
           </motion.div>
         }

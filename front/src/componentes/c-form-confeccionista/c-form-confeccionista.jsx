@@ -181,17 +181,17 @@ const FormConfeccionista = (props) => {
           <motion.div key='addConfe' initial='hidden' animate='show' exit='exit' variants={variantsAddConfe} className='c-addConfeAndConfirm'>
             <div>
               <form className='formConfe'>
-                <label >Nombre: </label>
+                <label >Nombre: <span className='asterisco'>*</span></label>
                 <br />
                 <input onChange={changeInput} type="text" id='nombreAddConfe' />
                 <br />
-                <label >Contraseña: </label>
+                <label >Contraseña: <span className='asterisco'>*</span></label>
                 {
                   input.password != '' &&
                   <div className='password'>{input.password}</div>
                 }
                 <motion.div whileHover={{ scale: 1.1 }} className="generatePassword" onClick={generatePassword}>Generar contraseña</motion.div>
-                <label >Puede Auditar?</label>
+                <label >Puede Auditar? <span className='asterisco'>*</span></label>
                 <br />
                 <div className='c-siOrNoAudit'>
                   <label className='checkBoxSi'>Si <input className='checkBox ' type="checkbox" onChange={changeInputAauditar} name="a_auditar" id='auditarSi' value='Si' /></label>

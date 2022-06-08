@@ -1,9 +1,10 @@
 .navigation{
-  display: flex;
-  flex-direction: row;
+  display: grid;
   padding-left: 10%;
-  padding-top: 30px;
+  padding-top: 20px;
   background-color: #211f23;
+  grid-template-columns: 1fr;
+  
 }
 
 .HomeButton{
@@ -59,7 +60,9 @@
 .containerButtons{
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  /* border: solid 1px red; */
 }
 
 .containerButtons div{
@@ -69,6 +72,29 @@
   border-radius: 5px;
   font-family: 'Lato', sans-serif;
   padding: 3px 4px 0 3px;
+  width: max-content;
+}
+
+.nav-rigth{
+  /* border: solid red 1px; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.nav-left{
+  /* border: solid red 1px; */
+  display: flex;
+  flex-direction: row;
+
+
+}
+
+.nav-left > div{
+  /* border: solid blue 1px; */
+  align-self: center;
+  
+
 }
 
 
@@ -102,21 +128,29 @@
   
 }
 
+.b-exportExcel{
+  background-color: #27ae60;
+}
+
+
+
 @media screen and (max-width : 1023px) {
   .navigation{
-    padding-left: 5%;
-    display: grid;
-    grid-template-columns: 1fr 4fr;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .containerBuscar{
-    margin-left:20px ;
+  .nav-left{
+    width: min-content;
+    margin-left: 20px;
   }
 
-  .containerButtons{
-    margin-top: 10px;
-    grid-column: 1 /span 2;
-  }
+  /* .nav-rigth{
+    width: max-content;
+    
+  } */
+
+
   
 }
 
@@ -131,6 +165,7 @@
     display: grid;
     grid-template-columns: 1fr;
     padding-right: 20px;
+    width: 100%;
   }
   .containerButtons div{
     
@@ -144,7 +179,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+
   }
+
   .buttonLink{
     display: flex;
     flex-direction: column;

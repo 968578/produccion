@@ -5,8 +5,15 @@
   
 }
 
+
 .titleCrearLote{
   font-family: 'Lato', sans-serif;
+}
+
+.asterisco{
+  color: #b33939;
+  font-size: 22px;
+
 }
 
 .titleNewLote{
@@ -75,6 +82,8 @@
 .helps{
   margin: 0;
   width: min-content;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
 }
 
 
@@ -143,3 +152,6 @@
     margin-right: 0px;
   }
 }
+
+
+

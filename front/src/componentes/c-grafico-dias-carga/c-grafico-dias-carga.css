@@ -1,0 +1,26 @@
+.c-reporteDiasCarga{
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 5% 0 5%;
+  border: black solid 1px;
+  padding: 10px 30px 20px 30px ;
+  border-radius: 15px;
+  background-color: #30475E;
+  margin-top: 30px;
+}
+
+.reporteDiasCaraga{
+  width: 80%;
+  margin: auto;
+}
+
+
+@media screen and (max-width: 600px) {
+  .reporteDiasCaraga{
+    width: max-content;
+    margin: auto;
+    height: max-content;
+  }
+  
+
+}

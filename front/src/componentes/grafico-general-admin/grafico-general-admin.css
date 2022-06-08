@@ -1,0 +1,128 @@
+.SelectConfeccionista{
+  
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.chartGeneral{
+  margin: auto;
+  background-color: #30475E;
+  border-radius: 3px;
+  width: 70%;
+}
+
+.c-reporte{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  margin: 0 5% 0 5%;
+  border: black solid 1px;
+  padding: 10px 0 10px 0 ;
+  border-radius: 15px;
+  background-color: #30475E;
+}
+
+.c-namesOp{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: min-content;
+  width: min-content;
+  align-self: center;
+  justify-self: flex-start;
+}
+
+.c-namesOp > div{
+  margin: 3px;
+  padding: 2px;
+  border-radius:3px ;
+  font-family: 'Lato', sans-serif;
+  font-size: 17px;
+
+}
+
+.c-namesOp > div:hover{
+  box-shadow: 3px 3px 10px white;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.colorDefault{
+  background-color: #747d8c;
+}
+
+.colorParo{
+  background-color:#c0392b ;
+}
+
+.colorConfe{
+  background-color:#20bf6b ;
+}
+
+.colorLavanderia{
+  background-color:#5f27cd ;
+}
+
+.colorTerminacion{
+  background-color:#f1c40f ;
+}
+
+.colorLiberado{
+  background-color:#3498db ;
+}
+
+.colorRecepcion{
+  background-color: #ff793f;
+}
+
+.colorPreparacion{
+  background-color: #F8EFBA;
+}
+
+.colorParaAsignar{
+  background-color: #f8a5c2;
+}
+
+.colorIntegracion{
+  background-color: #43919B;
+}
+
+.c-namesOp > div a{
+  color: black;
+}
+
+@media screen and (max-width: 1023px) {
+
+  .c-namesOp > div{
+
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    
+  }
+
+}
+
+
+@media screen and (max-width: 600px) {
+
+  .c-reporte{
+    display: grid;
+    grid-template-columns:  1fr;
+    grid-template-rows: auto auto;
+    
+  }
+
+  .c-namesOp{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-self: center;
+    margin-top: 50px;
+  }
+
+  .chartGeneral{
+    height: 70%;
+    width: 90%;
+  }
+
+}

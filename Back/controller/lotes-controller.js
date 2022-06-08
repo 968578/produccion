@@ -124,7 +124,6 @@ router.get('/op', verifyTokenGeneral, (req, res) => {
         }
 
         for (let i = 0; i < lote.auditoria.length; i++) {
-
           const queryCobros = `SELECT * FROM cobros WHERE auditoria_id = '${lote.auditoria[i].auditoria_id}';`
 
           conn.query(queryCobros, (error, results) => {
@@ -220,13 +219,13 @@ router.get('/op-from-confeccionista', verifyTokenConfeccionista, (req, res) => {
             lote.auditoria[i].cobros = { ...results[0] }
             if (i === lote.auditoria.length - 1) {
               res.send(lote)
+              conn.release()
             }
 
           })
         }
-        conn.release()
-      })
 
+      })
     })
 
   } catch (error) {
@@ -263,7 +262,7 @@ router.get('/nombre', verifyTokenConfeccionista, (req, res) => {
 // para agregar lotes   
 //  ruta /lotes
 router.post('/insert', verifyTokenGeneral, (req, res) => {
-  const { op, referencia, tejido, tipo_producto, unidades, sam, estado, confeccionista,
+  const { op, referencia, coleccion, fecha_ingreso_cedi, tejido, tipo_producto, unidades, sam, estado, confeccionista,
     fecha_asignacion, fecha_entrega, capacidad, fecha_probable_entrega, eficiencia,
     valor_unidad, modulo, zona } = req.body
 
@@ -272,9 +271,9 @@ router.post('/insert', verifyTokenGeneral, (req, res) => {
     // observacion lo dejo vacio ya que cuando se crea no es necesario una observacion por ahora
     const observacion = ''
     // res.send('oki')
-    const query = `INSERT INTO lotes (op, referencia , tejido, tipo_producto, unidades, sam, estado , confeccionista,
+    const query = `INSERT INTO lotes (op, referencia ,coleccion, fecha_ingreso_cedi, tejido, tipo_producto, unidades, sam, estado , confeccionista,
       fecha_asignacion, fecha_entrega, capacidad, fecha_probable_entrega, eficiencia, valor_unidad ,modulo, zona, observacion ) VALUES 
-        ('${op}', '${referencia}', '${tejido}', '${tipo_producto}', '${unidades}', '${sam}', '${estado}', '${confeccionista}',
+        ('${op}', '${referencia}', '${coleccion}', '${fecha_ingreso_cedi}', '${tejido}', '${tipo_producto}', '${unidades}', '${sam}', '${estado}', '${confeccionista}',
           '${fecha_asignacion}', '${fecha_entrega}', '${capacidad}', '${fecha_probable_entrega}', '${eficiencia}',
             '${valor_unidad}', '${modulo}', '${zona}', '${observacion}');`
 
@@ -306,12 +305,13 @@ router.post('/insert', verifyTokenGeneral, (req, res) => {
 //  ruta /lotes
 router.put('/update', verifyTokenGeneral, (req, res) => {
 
-  const { op, referencia, tejido, tipo_producto, unidades, sam, estado, confeccionista,
+  const { op, referencia, tejido, coleccion, fecha_ingreso_cedi, tipo_producto, unidades, sam, estado, confeccionista,
     fecha_asignacion, fecha_entrega, capacidad, fecha_probable_entrega, eficiencia,
     valor_unidad, modulo, zona } = req.body
 
   try {
-    const queryUpdateLote = `UPDATE lotes SET referencia = '${referencia}', tejido = '${tejido}', tipo_producto = '${tipo_producto}',
+    const queryUpdateLote = `UPDATE lotes SET referencia = '${referencia}', tejido = '${tejido}', coleccion = '${coleccion}',
+      fecha_ingreso_cedi = '${fecha_ingreso_cedi}', tipo_producto = '${tipo_producto}',
       unidades = '${unidades}', sam = '${sam}', estado = '${estado}', confeccionista = '${confeccionista}', 
       fecha_asignacion = '${fecha_asignacion}', fecha_entrega = '${fecha_entrega}', capacidad='${capacidad}',
       fecha_probable_entrega = '${fecha_probable_entrega}', eficiencia= '${eficiencia}', valor_unidad = '${valor_unidad}', 
@@ -319,25 +319,114 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
 
     pool.getConnection((err, conn) => {
       if (err) throw err
-      if (estado === 'Liberado') {
+
+      if (estado === 'Recepcion') {
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 0) {
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+
+            const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Recepcion' , '${fechaCortaInicio}', '${op}');`
+            conn.query(queryCiclos, (error, results) => {
+              if (error) throw error
+
+            })
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Ciclo de RECEPCION iniciado' })
+            })
+          }
+          else if (results.length === 1) {
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote Actualizado con exito' })
+            })
+          } else if (results.length > 1) {
+            res.send({ msj: 'Lote ya paso por RECEPCION anteriormente' })
+          }
+        })
+
+
+
+      } else if (estado === 'Preparacion') {
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 0) {
+            res.send({ msj: 'No puede estar en PREPARACION sin Recepcion' })
+
+          } else if (results.length === 1 && results[0].fecha_final === null) {
+
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+
+            const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Preparacion' , '${fechaCortaInicio}', '${op}');`
+            conn.query(queryCiclos, (error, results) => {
+              if (error) throw error
+
+            })
+
+            const queryUpdateCicloRecepcion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                    WHERE id_ciclo = ${results[0].id_ciclo};`
+            conn.query(queryUpdateCicloRecepcion, (error, results) => {
+              if (error) throw error
+
+            })
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Ciclo de PREPARACION iniciado' })
+            })
+          } else if (results.length === 2) {
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote Actualizado con exito' })
+            })
+          } else if (results.length > 2) {
+            res.send({ msj: 'Lote ya paso por PREPARACION anteriormente' })
+          }
+
+        })
+
+
+      } else if (estado === 'Confeccion') {
 
         const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
         conn.query(queryConfirm, (error, results) => {
           if (error) throw error
 
           if (results.length === 0 || results.length === 1) {
-            res.send({ msj: 'El lote no puede estar en Liberado sin CONFECCION Y TERMINACION' })
+            res.send({ msj: 'No puede estar en CONFECCION sin preparacion' })
 
-          } else if (results.length === 2 && results[1].tipo === 'Terminacion' && results[1].fecha_final === null) {
+          } else if (results.length === 2 && results[1].fecha_final === null) {
 
             const today = new Date()
             const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
               : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
 
+            const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Confeccion' , '${fechaCortaInicio}', '${op}');`
+            conn.query(queryCiclos, (error, results) => {
+              if (error) throw error
 
-            const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+            })
+
+            const queryUpdateCicloPreparacion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
                                                   WHERE id_ciclo = ${results[1].id_ciclo};`
-            conn.query(queryUpdateCicloConfeccion, (error, results) => {
+            conn.query(queryUpdateCicloPreparacion, (error, results) => {
               if (error) throw error
 
             })
@@ -345,40 +434,44 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send({ msj: 'Lote actualizado y liberado, Ciclo TERMINACION finalizado' })
+              res.send({ msj: 'Ciclo de CONFECCION iniciado' })
             })
-
-          } else if (results.length === 2 && results[1].tipo === 'Terminacion' && results[1].fecha_final) {
-
+          } else if (results.length === 3) {
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send({ msj: 'Lote actualizado con exito, ciclo Terminacion ya estaba finalizado' })
+              res.send({ msj: 'Lote Actualizado con exito' })
             })
+          } else if (results.length > 3) {
+            res.send({ msj: 'Lote ya paso por CONFECCION anteriormente' })
 
-          } else if (results.length === 2 && results[1].tipo === 'Lavanderia') {
+          }
+        })
 
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET referencia = '${referencia}', tejido = '${tejido}', tipo_producto = '${tipo_producto}',
-              unidades = '${unidades}', sam = '${sam}', confeccionista = '${confeccionista}', 
-              fecha_asignacion = '${fecha_asignacion}', fecha_entrega = '${fecha_entrega}', capacidad='${capacidad}',
-              fecha_probable_entrega = '${fecha_probable_entrega}', eficiencia= '${eficiencia}', valor_unidad = '${valor_unidad}', 
-              modulo = '${modulo}', zona = '${zona}' WHERE op = '${op}'`
 
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
-              if (error) throw error
+      } else if (estado === 'Lavanderia') {
 
-              res.send({ msj: 'Lote Actualizado con exito excepto el estado, Lote no puede ser LIBERADO sin Terminacion' })
-            })
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
 
-          } else if (results.length === 3 && results[2].tipo === 'Terminacion' && results[2].fecha_final === null) {
+          if (results.length === 0 || results.length === 1 || results.length === 2) {
+            res.send({ msj: 'El lote no puede estar en LAVANDERIA sin confeccion' })
+          }
+          else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
 
             const today = new Date()
             const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
               : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
 
+            const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Lavanderia' , '${fechaCortaInicio}', '${op}');`
+            conn.query(queryCiclos, (error, results) => {
+              if (error) throw error
+
+            })
 
             const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
-                                                  WHERE id_ciclo = ${results[2].id_ciclo};`
+                                                    WHERE id_ciclo = ${results[2].id_ciclo};`
             conn.query(queryUpdateCicloConfeccion, (error, results) => {
               if (error) throw error
 
@@ -387,15 +480,214 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send({ msj: 'Lote actualizado y Liberado, Ciclo TERMINACION finalizado' })
+              res.send({ msj: 'Ciclo de LAVANDERIA iniciado' })
             })
 
-          } else if (results.length === 3 && results[2].fecha_final) {
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion') {
+            res.send({ msj: 'Lote no pasa por LAVANDERIA' })
+
+          } else if (results.length === 4 && results[3].tipo === 'Lavanderia') {
+
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send({ msj: 'Lote Actualizado, Ciclo de TERMINACION ya habia finalizado' })
+              res.send({ msj: 'Lote Actualizado con exito' })
             })
+
+          } else if (results.length > 4) {
+            res.send({ msj: 'Lote ya paso por LAVANDERIA anteriormente' })
+
+          }
+        })
+
+
+      } else if (estado === 'Terminacion') {
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 0 || results.length === 1 || results.length === 2) {
+            res.send({ msj: 'El lote no puede estar en Terminacion sin CONFECCION' })
+
+          } else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
+
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+
+            const queryUpdateCicloTerminacion = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Terminacion', '${fechaCortaInicio}', '${op}');`
+            conn.query(queryUpdateCicloTerminacion, (error, results) => {
+              if (error) throw error
+            })
+
+            const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                      WHERE id_ciclo = ${results[2].id_ciclo};`
+            conn.query(queryUpdateCicloConfeccion, (error, results) => {
+              if (error) throw error
+
+            })
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Ciclo de TERMINACION iniciado' })
+            })
+
+          } else if (results.length === 4 && results[3].tipo === 'Lavanderia' && results[3].fecha_final === null) {
+
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+
+            const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Terminacion' , '${fechaCortaInicio}', '${op}');`
+            conn.query(queryCiclos, (error, results) => {
+              if (error) throw error
+
+            })
+            const queryUpdateCicloLavanderia = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                    WHERE id_ciclo = ${results[3].id_ciclo};`
+            conn.query(queryUpdateCicloLavanderia, (error, results) => {
+              if (error) throw error
+            })
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Ciclo de TERMINACION Iniciado' })
+            })
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion' && results[3].fecha_final) {
+            res.send({ msj: 'Lote ya paso por TERMINACION anteriormente' })
+
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion' && results[3].fecha_final === null) {
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+              res.send({ msj: 'Lote Actualizado con exito' })
+            })
+
+          } else if (results.length === 5 && results[4].tipo === 'Terminacion' && results[4].fecha_final === null) {
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote Actualizado con exito' })
+            })
+          } else if (results.length === 5 && results[4].fecha_final) {
+            res.send({ msj: 'Lote ya paso por Terminacion anteriormente' })
+
+          }
+        })
+
+
+      } else if (estado === 'Paro') {
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 1 || results.length === 2 || results.length === 3) {
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote Actualizado con exito' })
+            })
+
+          } else if ((results.length === 4 && results[3].fecha_final === null) || (results.length === 5 && results[4].fecha_final === null)) {
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote Actualizado con exito' })
+            })
+
+          } else if ((results.length === 4 && results[3].fecha_final) || (results.length === 5 && results[4].fecha_final)) {
+            res.send({ msj: 'Lote ya fue LIBERADO no puede estar en PARO' })
+          }
+        })
+
+
+      } else if (estado === 'Liberado') {
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 0 || results.length === 1 || results.length === 2 || results.length === 3) {
+            res.send({ msj: 'No puede liberarse sin TERMINACION' })
+
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion' && results[3].fecha_final === null) {
+
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+
+            const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                  WHERE id_ciclo = ${results[3].id_ciclo};`
+            conn.query(queryUpdateCicloConfeccion, (error, results) => {
+              if (error) throw error
+
+            })
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote Liberado con exito' })
+            })
+
+          } else if (results.length === 4 && results[3].tipo === 'Lavanderia') {
+            res.send({ msj: 'No puede Liberarse sin terminacion' })
+
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion' && results[3].fecha_final) {
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote actualizado con exito' })
+            })
+
+          } else if (results.length === 5 && results[4].tipo === 'Terminacion' && results[4].fecha_final === null) {
+
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+
+            const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                  WHERE id_ciclo = ${results[4].id_ciclo};`
+            conn.query(queryUpdateCicloConfeccion, (error, results) => {
+              if (error) throw error
+
+            })
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote LIBERADO con exito' })
+            })
+
+          } else if (results.length === 5 && results[4].fecha_final && results[4].tipo === 'Terminacion') {
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send({ msj: 'Lote Actualizado con exito' })
+            })
+          }
+        })
+
+      } else if (estado === 'Corte' || estado === 'Lote Integracion' || estado === 'Para Asignar') {
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 0) {
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.json({ msj: 'Lote actualizado con exito' })
+            })
+          } else if (results.length > 0) {
+            res.json({ msj: 'Lote No puede volver a estados iniciales' })
           }
         })
 
@@ -427,7 +719,8 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
     const queryUpdateLote = `UPDATE lotes SET observacion = '${observacion}', estado = '${estado}', 
     unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
       WHERE op ='${op}';`
-    if (estado === 'Confeccion') {
+
+    if (estado === 'Recepcion') {
 
       pool.getConnection((err, conn) => {
         if (err) throw err
@@ -436,23 +729,99 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
         conn.query(queryConfirm, (error, results) => {
           if (error) throw error
 
-          if (results.length > 1) {
+          if (results.length === 0) {
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
 
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET observacion = '${observacion}', 
-            unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
-              WHERE op ='${op}';`
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
+            const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Recepcion' , '${fechaCortaInicio}', '${op}');`
+            conn.query(queryCiclos, (error, results) => {
               if (error) throw error
 
-              res.send('Lote Actualizado con exito excepto el estado, el LOTE ya paso por CONFECCION anteriormente')
             })
-          } else if (results.length === 1 && results[0].fecha_final === null) {
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send('Ciclo de RECEPCION iniciado')
+            })
+          }
+          else if (results.length === 1) {
+
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
               res.send('Lote Actualizado con exito')
             })
-          } else {
+          } else if (results.length > 1) {
+            res.send('Lote ya paso por RECEPCION anteriormente')
+          }
+        })
+
+        conn.release()
+      })
+    } else if (estado === 'Preparacion') {
+      pool.getConnection((err, conn) => {
+        if (err) throw err
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 0) {
+            res.send('No puede estar en PREPARACION sin Recepcion')
+
+          } else if (results.length === 1 && results[0].fecha_final === null) {
+
+            const today = new Date()
+            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
+              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+
+            const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Preparacion' , '${fechaCortaInicio}', '${op}');`
+            conn.query(queryCiclos, (error, results) => {
+              if (error) throw error
+
+            })
+
+            const queryUpdateCicloRecepcion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                  WHERE id_ciclo = ${results[0].id_ciclo};`
+            conn.query(queryUpdateCicloRecepcion, (error, results) => {
+              if (error) throw error
+
+            })
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send('Ciclo de PREPARACION iniciado')
+            })
+          } else if (results.length === 2) {
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send('Lote Actualizado con exito')
+            })
+          } else if (results.length > 2) {
+            res.send('Lote ya paso por PREPARACION anteriormente')
+          }
+
+        })
+        conn.release()
+      })
+    }
+    else if (estado === 'Confeccion') {
+
+      pool.getConnection((err, conn) => {
+        if (err) throw err
+
+        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
+        conn.query(queryConfirm, (error, results) => {
+          if (error) throw error
+
+          if (results.length === 0 || results.length === 1) {
+            res.send('No puede estar en CONFECCION sin preparacion')
+
+          } else if (results.length === 2 && results[1].fecha_final === null) {
 
             const today = new Date()
             const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
@@ -464,11 +833,26 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
 
             })
 
+            const queryUpdateCicloPreparacion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                WHERE id_ciclo = ${results[1].id_ciclo};`
+            conn.query(queryUpdateCicloPreparacion, (error, results) => {
+              if (error) throw error
+
+            })
+
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send('Lote Actualizado, ciclo de CONFECCION iniciado')
+              res.send('Ciclo de CONFECCION iniciado')
             })
+          } else if (results.length === 3) {
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send('Lote Actualizado con exito')
+            })
+          } else if (results.length > 3) {
+            res.send('Lote ya paso por CONFECCION anteriormente')
 
           }
         })
@@ -483,10 +867,10 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
         conn.query(queryConfirm, (error, results) => {
           if (error) throw error
 
-          if (results.length === 0) {
-            res.send('El lote no puede estar en lavanderia sin CONFECCION')
-
-          } else if (results.length === 1 && results[0].tipo === 'Confeccion' && results[0].fecha_final === null) {
+          if (results.length === 0 || results.length === 1 || results.length === 2) {
+            res.send('No puede estar en LAVANDERIA sin confeccion')
+          }
+          else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
 
             const today = new Date()
             const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
@@ -499,7 +883,7 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
             })
 
             const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
-                                                  WHERE id_ciclo = ${results[0].id_ciclo};`
+                                                  WHERE id_ciclo = ${results[2].id_ciclo};`
             conn.query(queryUpdateCicloConfeccion, (error, results) => {
               if (error) throw error
 
@@ -508,20 +892,13 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send('Lote Actualizado, ciclo de LAVANDERIA iniciado')
+              res.send('Ciclo de LAVANDERIA iniciado')
             })
 
-          } else if (results.length === 1 && results[0].tipo === 'Confeccion' && results[0].fecha_final) {
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET observacion = '${observacion}', 
-            unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
-              WHERE op ='${op}';`
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
-              if (error) throw error
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion') {
+            res.send('Lote no pasa por LAVANDERIA')
 
-              res.send('Lote Actualizado con exito, el Lote No pasa por Lavanderia')
-            })
-
-          } else if (results.length === 2 && results[1].fecha_final === null && results[1].tipo === 'Lavanderia') {
+          } else if (results.length === 4 && results[3].tipo === 'Lavanderia') {
 
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
@@ -529,35 +906,9 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
               res.send('Lote Actualizado con exito')
             })
 
-          } else if (results.length === 2 && results[1].tipo === 'Terminacion' && results[1].fecha_final === null) {
+          } else if (results.length > 4) {
+            res.send('Lote ya paso por LAVANDERIA anteriormente')
 
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET observacion = '${observacion}', 
-            unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
-              WHERE op ='${op}';`
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
-              if (error) throw error
-
-              res.send('Lote Actualizado con exito excepto el estado, el LOTE ya esta en TERMINACION')
-            })
-          } else if (results.length === 2 && results[1].tipo === 'Terminacion' && results[1].fecha_final) {
-
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET observacion = '${observacion}', 
-            unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
-              WHERE op ='${op}';`
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
-              if (error) throw error
-
-              res.send('Lote Actualizado con exito excepto el estado, el LOTE ya esta LIBERADO')
-            })
-          } else if (results.length === 3) {
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET observacion = '${observacion}', 
-            unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
-              WHERE op ='${op}';`
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
-              if (error) throw error
-            })
-
-            res.send('Lote Actualizado con exito excepto el estado, Lote ya paso por LAVANDERIA anteriormente')
           }
         })
         conn.release()
@@ -570,44 +921,34 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
         conn.query(queryConfirm, (error, results) => {
           if (error) throw error
 
-          if (results.length === 0) {
-            res.send('El lote no puede estar en Terminacion sin CONFECCION')
+          if (results.length === 0 || results.length === 1 || results.length === 2) {
+            res.send('No puede estar en Terminacion sin CONFECCION')
 
-          } else if (results.length === 1 && results[0].fecha_final === null) {
+          } else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
+
             const today = new Date()
             const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
               : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
-
-
-            const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
-                                                  WHERE id_ciclo = ${results[0].id_ciclo};`
-            conn.query(queryUpdateCicloConfeccion, (error, results) => {
-              if (error) throw error
-
-            })
 
             const queryUpdateCicloTerminacion = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Terminacion', '${fechaCortaInicio}', '${op}');`
             conn.query(queryUpdateCicloTerminacion, (error, results) => {
               if (error) throw error
             })
 
+            const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
+                                                    WHERE id_ciclo = ${results[2].id_ciclo};`
+            conn.query(queryUpdateCicloConfeccion, (error, results) => {
+              if (error) throw error
+
+            })
+
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send('Lote Actualizado, Ciclo de CONFECCION Finalizado, Inicia TERMINACION')
+              res.send('Ciclo de TERMINACION iniciado')
             })
 
-          } else if (results.length === 2 && results[1].tipo === 'Terminacion' && results[1].fecha_final) {
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET observacion = '${observacion}', 
-            unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
-              WHERE op ='${op}';`
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
-              if (error) throw error
-
-              res.send('Lote Actualizado con exito excepto el estado, el LOTE ya paso por TERMINACION anteriormente')
-            })
-
-          } else if (results.length === 2 && results[1].tipo === 'Lavanderia') {
+          } else if (results.length === 4 && results[3].tipo === 'Lavanderia' && results[3].fecha_final === null) {
 
             const today = new Date()
             const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
@@ -619,7 +960,7 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
 
             })
             const queryUpdateCicloLavanderia = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
-                                                  WHERE id_ciclo = ${results[1].id_ciclo};`
+                                                  WHERE id_ciclo = ${results[3].id_ciclo};`
             conn.query(queryUpdateCicloLavanderia, (error, results) => {
               if (error) throw error
             })
@@ -627,30 +968,28 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
-              res.send('Lote Actualizado, Ciclo de LAVANDERIA finalizado, inicia Terminacion')
+              res.send('Ciclo de TERMINACION Iniciado')
             })
-          } else if (results.length === 2 && results[1].tipo === 'Terminacion') {
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion' && results[3].fecha_final === null) {
 
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
               res.send('Lote Actualizado con exito')
             })
-          } else if (results.length === 3 && results[2].fecha_final) {
 
-            const queryUpdateLoteSinEstado = `UPDATE lotes SET observacion = '${observacion}', 
-            unidades_terminadas = '${unidades_terminadas}', fecha_probable_entrega = '${fecha_probable_entrega}'
-              WHERE op ='${op}';`
-            conn.query(queryUpdateLoteSinEstado, (error, results) => {
-              if (error) throw error
+          } else if (results.length === 4 && results[3].tipo === 'Terminacion' && results[3].fecha_final) {
+            res.send('Lote ya paso por TERMINACION anteriormente')
 
-              res.send('Lote Actualizado con exito excepto el estado, el LOTE ya paso por TERMINACION anteriormente')
-            })
-          } else {
+          } else if (results.length === 5 && results[4].tipo === 'Terminacion' && results[4].fecha_final === null) {
+
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
               res.send('Lote Actualizado con exito')
             })
+          } else if (results.length === 5 && results[4].fecha_final) {
+            res.send('Lote ya paso por Terminacion anteriormente')
+
           }
         })
         conn.release()
@@ -664,56 +1003,38 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
         conn.query(queryConfirm, (error, results) => {
           if (error) throw error
 
-          if (results.length === 1 && results[0].fecha_final) {
-            res.send('El Lote ya Paso a Terminacion, no puede estar en PARO')
-
-          } else if (results.length === 2 || (results.length === 3 && results[2].fecha_final === null)) {
+          if (results.length === 1 || results.length === 2 || results.length === 3) {
             conn.query(queryUpdateLote, (error, results) => {
               if (error) throw error
 
               res.send('Lote Actualizado con exito')
             })
 
-          } else if (results.length === 3 && results[2].fecha_final) {
+          } else if ((results.length === 4 && results[3].fecha_final === null) || (results.length === 5 && results[4].fecha_final === null)) {
+
+            conn.query(queryUpdateLote, (error, results) => {
+              if (error) throw error
+
+              res.send('Lote Actualizado con exito')
+            })
+
+          } else if ((results.length === 4 && results[3].fecha_final) || (results.length === 5 && results[4].fecha_final)) {
             res.send('Lote ya fue LIBERADO no puede estar en PARO')
-          } else {
-            conn.query(queryUpdateLote, (error, results) => {
-              if (error) throw error
-
-              res.send('Lote Actualizado con exito')
-            })
           }
         })
         conn.release()
       })
-    } else if (estado === 'Recepcion' || estado === 'Preparacion') {
-      pool.getConnection((err, conn) => {
-        if (err) throw err
-
-        const queryConfirm = `SELECT * FROM ciclos WHERE op = '${op}';`
-        conn.query(queryConfirm, (error, results) => {
-          if (error) throw error
-
-          if (results.length > 0) {
-            res.send('Lote no puede volver a Recepcion ni Preparacion')
-          }
-        })
-      })
-
     } else {
-
       pool.getConnection((err, conn) => {
         if (err) throw err
 
         conn.query(queryUpdateLote, (error, results) => {
           if (error) throw error
-
           res.send('Lote Actualizado con exito')
         })
-        conn.release()
+
       })
     }
-
 
   } catch (error) {
     console.log(error)
@@ -746,7 +1067,7 @@ router.delete('/delete', verifyTokenGeneral, (req, res) => {
 
 //ruta para volver a activar un lote
 //ruta /lotes
-router.put('/update-activar-lote',verifyTokenGeneral ,(req, res) => {
+router.put('/update-activar-lote', verifyTokenGeneral, (req, res) => {
   const { op } = req.body
   try {
     const query = `UPDATE lotes SET estado = 'Liberado' WHERE op = '${op}';`
@@ -755,7 +1076,7 @@ router.put('/update-activar-lote',verifyTokenGeneral ,(req, res) => {
 
       conn.query(query, (error, results) => {
         if (error) throw error
-        res.json({msj:'Lote Activado'})
+        res.json({ msj: 'Lote Activado' })
       })
 
       conn.release()
@@ -767,5 +1088,42 @@ router.put('/update-activar-lote',verifyTokenGeneral ,(req, res) => {
 })
 
 
+// ruta para exportar a excel los lotes
+// ruta /lotes
+router.get('/get-export', verifyTokenGeneral, (req, res) => {
+  let lotes = []
+  try {
+      const query = `SELECT * FROM lotes WHERE estado != 'Inactivo';`
+      pool.getConnection((err, conn) => {
+        if (err) throw err
+        conn.query(query, (error, results) => {
+          if (error) throw error
+
+          if (results) {
+            lotes = [...results]
+          }
+
+          for (let i = 0; i < lotes.length; i++) {
+            const queryCiclos = `SELECT * FROM ciclos WHERE op = '${lotes[i].op}';`
+
+            conn.query(queryCiclos, (errorCiclo, resultsCiclo) => {
+              if (errorCiclo) throw errorCiclo
+
+              if (resultsCiclo) {
+                lotes[i].ciclo = resultsCiclo
+              }
+              if (i === lotes.length - 1) {
+                res.send(lotes)
+              }
+            })
+          }
+        })
+        conn.release()
+      })
+    
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 module.exports = router

@@ -6,7 +6,7 @@ const { verifyTokenGeneral, verifyTokenConfeccionista } = require('../middleware
 
 // agregar auditorias  
 //    /auditorias
-router.post('/insert',verifyTokenGeneral, (req, res) => {
+router.post('/insert', verifyTokenGeneral, (req, res) => {
   const { auditor, cobros, colaboradores_karibik, composicion, faltantes, faltantesTotal, fecha_auditoria, medidas, muestra_fisica,
     no_conformidades, op, primeras, segundas, tipo_revision, unidades_muestra, aprobado } = req.body
 
@@ -90,7 +90,7 @@ router.post('/insert',verifyTokenGeneral, (req, res) => {
       conn.query('COMMIT;', (error, results) => {
         if (error) throw error
         conn.release()
-        res.json({msj:'Auditoria Guardada con exito'})
+        res.json({ msj: 'Auditoria Guardada con exito' })
       })
 
     })
@@ -104,7 +104,7 @@ router.post('/insert',verifyTokenGeneral, (req, res) => {
 
 // esta ruta es para guardar auditorias desde el confeccionista
 // rute /auditorias
-router.post('/insert-from-confeccionista', verifyTokenConfeccionista ,(req,res)=>{
+router.post('/insert-from-confeccionista', verifyTokenConfeccionista, (req, res) => {
   const { auditor, cobros, colaboradores_karibik, composicion, faltantes, faltantesTotal, fecha_auditoria, medidas, muestra_fisica,
     no_conformidades, op, primeras, segundas, tipo_revision, unidades_muestra, aprobado } = req.body
 
@@ -188,7 +188,7 @@ router.post('/insert-from-confeccionista', verifyTokenConfeccionista ,(req,res)=
       conn.query('COMMIT;', (error, results) => {
         if (error) throw error
         conn.release()
-        res.json({msj:'Auditoria Guardada con exito'})
+        res.json({ msj: 'Auditoria Guardada con exito' })
       })
 
     })
@@ -200,11 +200,130 @@ router.post('/insert-from-confeccionista', verifyTokenConfeccionista ,(req,res)=
 })
 
 
+// esta ruta es para solicitar auditorias
+// ruta /auditorias
+router.get('/get-export', verifyTokenGeneral, (req, res) => {
+  const { criterio, fecha_inicial, fecha_final } = req.query
+
+  try {
+    if (criterio === 'Todo') {
+      const query = `SELECT * FROM auditorias;`
+      pool.getConnection((err, conn) => {
+        if (err) throw err
+        conn.query(query, (error, results) => {
+          if (error) throw error
+
+          if (results) {
+            for (let i = 0; i < results.length; i++) {
+              const queryFaltantes = `SELECT * FROM faltantes WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryFaltantes, (error, resultsFaltantes) => {
+                if (error) throw error
+                results[i].faltantes = [...resultsFaltantes]
+              })
+            }
+
+            for (let i = 0; i < results.length; i++) {
+              const queryNoConformidades = `SELECT * FROM no_conformidades WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryNoConformidades, (error, resultsNoConformidades) => {
+                if (error) throw error
+                results[i].no_conformidades = [...resultsNoConformidades]
+              })
+            }
+
+            for (let i = 0; i < results.length; i++) {
+              const queryMedidas = `SELECT * FROM medidas WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryMedidas, (error, resultsMedidas) => {
+                if (error) throw error
+                results[i].medidas = [...resultsMedidas]
+              })
+            }
+
+            for (let i = 0; i < results.length; i++) {
+              const queryCobros = `SELECT * FROM cobros WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryCobros, (error, resultsCobros) => {
+                if (error) throw error
+                results[i].cobros = { ...resultsCobros[0] }
+
+                if (i === results.length - 1) {
+                  res.send(results)
+                }
+    
+              })
+            }
+          }
+        })
+        conn.release()
+      })
+    } else if (criterio === 'Rango de fechas') {
+      const query = `SELECT * FROM auditorias WHERE fecha_auditoria >= '${fecha_inicial}' AND fecha_auditoria <= '${fecha_final}';`
+
+      pool.getConnection((err, conn) => {
+        if (err) throw err
+        conn.query(query, (error, results) => {
+          if (error) throw error
+
+          if (results) {
+            for (let i = 0; i < results.length; i++) {
+              const queryFaltantes = `SELECT * FROM faltantes WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryFaltantes, (error, resultsFaltantes) => {
+                if (error) throw error
+                results[i].faltantes = [...resultsFaltantes]
+              })
+            }
+
+            for (let i = 0; i < results.length; i++) {
+              const queryNoConformidades = `SELECT * FROM no_conformidades WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryNoConformidades, (error, resultsNoConformidades) => {
+                if (error) throw error
+                results[i].no_conformidades = [...resultsNoConformidades]
+              })
+            }
+
+            for (let i = 0; i < results.length; i++) {
+              const queryMedidas = `SELECT * FROM medidas WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryMedidas, (error, resultsMedidas) => {
+                if (error) throw error
+                results[i].medidas = [...resultsMedidas]
+              })
+            }
+
+            for (let i = 0; i < results.length; i++) {
+              const queryCobros = `SELECT * FROM cobros WHERE auditoria_id = '${results[i].auditoria_id}';`
+
+              conn.query(queryCobros, (error, resultsCobros) => {
+                if (error) throw error
+                results[i].cobros = { ...resultsCobros[0] }
+
+                if (i === results.length - 1) {
+                  res.send(results)
+                }
+    
+              })
+            }
+          }
+          
+        })
+        conn.release()
+      })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
 //para eliminar auditorias
 // ruta/auditorias
-router.delete('/delete', verifyTokenGeneral ,(req, res) => {
+router.delete('/delete', verifyTokenGeneral, (req, res) => {
   const { auditoria_id, op } = req.query
-  
+
   try {
     const queryDeleteAuditoria = `DELETE FROM auditorias WHERE auditoria_id = ${auditoria_id};`
     const queryVerifyLoteAuditado = `SELECT * FROM auditorias WHERE op = '${op}';`
@@ -213,19 +332,19 @@ router.delete('/delete', verifyTokenGeneral ,(req, res) => {
       if (err) throw err
       conn.query(queryDeleteAuditoria, (error, results) => {
         if (error) throw error
-        
+
       })
 
       conn.query(queryVerifyLoteAuditado, (error, results) => {
         if (error) throw error
-        if(results.length == 0){
+        if (results.length == 0) {
           const queryUpdateAuditado = `UPDATE lotes SET auditado = ${false} WHERE op = '${op}';`
           conn.query(queryUpdateAuditado, (error, results) => {
             if (error) throw error
-            res.json({msj:'Auditoria ELiminada'})  
+            res.json({ msj: 'Auditoria ELiminada' })
           })
-        }else{
-          res.json({msj:'Auditoria ELiminada'})
+        } else {
+          res.json({ msj: 'Auditoria ELiminada' })
         }
       })
       conn.release()

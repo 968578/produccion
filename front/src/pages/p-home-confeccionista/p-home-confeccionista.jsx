@@ -6,6 +6,7 @@ import './p-home-confeccionista.css'
 
 import LotesConfeccionista from "../../componentes/c-lotes-confeccionista/c-lotes-confeccionista"
 import NavConfeccionista from "../../componentes/c-nav-confeccionista/c-nav-confeccionista"
+import GraficoGeneralConfeccionista from "../../componentes/grafico-general-confeccionista/grafico-general-confeccionista"
 
 
 const HomeConfeccionista = () => {
@@ -54,6 +55,7 @@ const HomeConfeccionista = () => {
     <div>
       <NavConfeccionista searchLote={filterLotes} />
       <h1 className="titleNombreConfe">{confeccionista}</h1>
+      <GraficoGeneralConfeccionista lotes = {data}/>
       <LotesConfeccionista lotes={data} />
     </div>
   )

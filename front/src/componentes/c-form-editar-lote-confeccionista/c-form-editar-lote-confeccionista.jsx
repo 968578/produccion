@@ -85,18 +85,23 @@ const EditarLoteConfeccionista = (props) => {
           <form >
             <div className="c-actualizarLote">
               <div className="c-dosInputs">
-                <div className="inputSolo">
-                  <label className="titleEditLoteConfe" >Estado:</label>
-                  <select className='listEstado' defaultValue={input.estado} name='estado' onChange={changeInput} >
-                    <option value="">Escoge Estado</option>
-                    <option value="Recepcion">Recepcion</option>
-                    <option value="Preparacion">Preparacion</option>
-                    <option value="Confeccion">Confeccion</option>
-                    <option value="Lavanderia">Lavanderia</option>
-                    <option value="Terminacion">Terminacion</option>
-                    <option value="Paro">Paro</option>
-                  </select>
-                </div>
+                {
+                  ( input.estado === 'Recepcion' || input.estado === 'Preparacion' || input.estado === 'Confeccion' ||
+                    input.estado === 'Lavanderia' || input.estado === 'Terminacion' || input.estado === 'Paro' )  &&
+                  <div className="inputSolo">
+                    <label className="titleEditLoteConfe" >Estado:</label>
+                    <select className='listEstado' defaultValue={input.estado} name='estado' onChange={changeInput} >
+                      <option value="">Escoge Estado</option>
+                      <option value="Recepcion">Recepcion</option>
+                      <option value="Preparacion">Preparacion</option>
+                      <option value="Confeccion">Confeccion</option>
+                      <option value="Lavanderia">Lavanderia</option>
+                      <option value="Terminacion">Terminacion</option>
+                      <option value="Paro">Paro</option>
+                    </select>
+                  </div>
+                }
+
                 <div className="inputSolo">
                   <label className="titleEditLoteConfe">Unidades Terminadas:</label>
                   <input onChange={changeInput} defaultValue={input.unidades_terminadas} name='unidades_terminadas' type="text" />

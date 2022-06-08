@@ -4,6 +4,7 @@
   margin: 0 auto;
   padding: 0 5px 2px 5px;
   border-radius: 3px;
+  font-size: 20px;
 }
 
 .generatePassword:hover{

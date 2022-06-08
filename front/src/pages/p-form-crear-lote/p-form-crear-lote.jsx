@@ -29,6 +29,7 @@ const FormLotes = () => {
 
   const refOp = useRef(null)
   const refReferencia = useRef(null)
+  const refColeccion = useRef(null)
   const refTejido = useRef(null)
   const refTipo_producto = useRef(null)
   const refUnidades = useRef(null)
@@ -43,6 +44,7 @@ const FormLotes = () => {
   const refEficiencia = useRef(null)
   const refValor_unidad = useRef(null)
   const refZona = useRef(null)
+  const refFechaIngresoCedi = useRef(null)
 
   const [activeButon, setActiveButon] = useState(false)
   const [confirmCreate, setConfirmCreate] = useState('')
@@ -52,6 +54,8 @@ const FormLotes = () => {
   const [input, setInput] = useState({
     op: '',
     referencia: '',
+    coleccion: '',
+    fecha_ingreso_cedi: '',
     tejido: '',
     tipo_producto: '',
     unidades: '',
@@ -66,7 +70,7 @@ const FormLotes = () => {
     eficiencia: '',
     valor_unidad: '',
     modulo: '',
-    zona: ''
+    zona: '',
   })
 
   const [errors, setErrors] = useState({})
@@ -99,6 +103,14 @@ const FormLotes = () => {
         for (let i = 0; i < value.length; i++) {
           if (filtroGeneral.indexOf(value[i]) === -1) {
             return document.getElementById('referencia').value = input.referencia
+          }
+        }
+        break;
+
+      case 'coleccion':
+        for (let i = 0; i < value.length; i++) {
+          if (filtroGeneral.indexOf(value[i]) === -1) {
+            return document.getElementById('coleccion').value = input.coleccion
           }
         }
         break;
@@ -233,6 +245,7 @@ const FormLotes = () => {
     if (!activeButon) {
       return
     }
+    console.log(input)
     const token = window.localStorage.getItem('accessTokenAdmin')
     axios.post(`${process.env.REACT_APP_API_URL}/lotes/insert`, input, {
       headers: {
@@ -249,6 +262,8 @@ const FormLotes = () => {
 
           refOp.current.value = ''
           refReferencia.current.value = ''
+          refColeccion.current.value =''
+          refFechaIngresoCedi.current.value=''
           refTejido.current.value = ''
           refTipo_producto.current.value = ''
           refUnidades.current.value = ''
@@ -267,6 +282,8 @@ const FormLotes = () => {
           setInput({
             op: '',
             referencia: '',
+            coleccion: '',
+            fecha_ingreso_cedi: '',
             tejido: '',
             tipo_producto: '',
             unidades: '',
@@ -281,7 +298,7 @@ const FormLotes = () => {
             eficiencia: '',
             valor_unidad: '',
             modulo: '',
-            zona: ''
+            zona: '',
           })
 
           setErrors({})
@@ -338,46 +355,48 @@ const FormLotes = () => {
 
             <div className="containerTwoInputs" >
               <div className='itemIzquierdo'>
-                <label className='titleCrearLote'>OP <br /><input id='op' ref={refOp} name='op' onChange={changeInput} type="text" /> </label>
+                <label className='titleCrearLote oplabel'>OP <span className='asterisco'>*</span><br /><input id='op' ref={refOp} name='op' onChange={changeInput} type="text" /> </label>
               </div>
               <div>
-                <label className='titleCrearLote'>Referencia <br /><input id='referencia' ref={refReferencia} name='referencia' onChange={changeInput} type="text" /> </label>
+                <label className='titleCrearLote'>Referencia <span className='asterisco'>*</span><br /><input id='referencia' ref={refReferencia} name='referencia' onChange={changeInput} type="text" /> </label>
+              </div>
+            </div>
+
+            <div className="containerTwoInputs" >
+              <div className='itemIzquierdo'>
+                <label className='titleCrearLote'>Coleccion <span className='asterisco'>*</span><br /><input id='coleccion' ref={refColeccion} name='coleccion' onChange={changeInput} type="text" /> </label>
+              </div>
+              <div>
+                <label className='titleCrearLote'>Fecha Maxima Ingreso Cedi <span className='asterisco'>*</span><br /><input id='fecha_ingreso_cedi' ref={refFechaIngresoCedi} name='fecha_ingreso_cedi' onChange={changeInput} type="date" /> </label>
               </div>
             </div>
 
             <div className="containerTwoInputs">
               <div className='itemIzquierdo'>
-                <label className='titleCrearLote'>Tejido <br /><input id='tejido' ref={refTejido} name='tejido' onChange={changeInput} type="text" /> </label>
+                <label className='titleCrearLote'>Tejido <span className='asterisco'>*</span><br /><input id='tejido' ref={refTejido} name='tejido' onChange={changeInput} type="text" /> </label>
               </div>
               <div>
-                <label className='titleCrearLote'>Tipo producto <br /><input id='tipo_producto' ref={refTipo_producto} name='tipo_producto' onChange={changeInput} type="text" /> </label>
+                <label className='titleCrearLote'>Tipo producto <span className='asterisco'>*</span><br /><input id='tipo_producto' ref={refTipo_producto} name='tipo_producto' onChange={changeInput} type="text" /> </label>
               </div>
             </div>
 
             <div className="containerTwoInputs">
               <div className='itemIzquierdo'>
-                <label className='titleCrearLote'>Unidades <br /><input id='unidades' ref={refUnidades} name='unidades' onChange={changeInput} type="text" /> </label>
+                <label className='titleCrearLote'>Unidades <span className='asterisco'>*</span><br /><input id='unidades' ref={refUnidades} name='unidades' onChange={changeInput} type="text" /> </label>
               </div>
               <div>
-                <label className='titleCrearLote'>Sam <br /><input id='sam' ref={refSam} name='sam' onChange={changeInput} type="text" /> </label>
+                <label className='titleCrearLote'>Sam <span className='asterisco'>*</span><br /><input id='sam' ref={refSam} name='sam' onChange={changeInput} type="text" /> </label>
               </div>
             </div>
 
             <div className="containerTwoInputs">
               <div className='itemIzquierdo'>
-                <label className='titleCrearLote'>Estado</label> <br />
+                <label className='titleCrearLote'>Estado <span className='asterisco'>*</span></label> <br />
                 <select id='listestado' ref={refEstado} name='estado' onChange={changeInput} >
                   <option value="">Escoge Estado</option>
                   <option value="Corte">Corte</option>
                   <option value="Lote Integracion">Lote Integracion</option>
                   <option value="Para Asignar">Para Asignar</option>
-                  <option value="Recepcion">Recepcion</option>
-                  <option value="Preparacion">Preparacion</option>
-                  <option value="Confeccion">Confeccion</option>
-                  <option value="Lavanderia">Lavanderia</option>
-                  <option value="Terminacion">Terminacion</option>
-                  <option value="Liberado">Liberado</option>
-                  <option value="Paro">Paro</option>
                 </select>
               </div>
               <div>
@@ -428,7 +447,7 @@ const FormLotes = () => {
 
             <div className="containerTwoInputs">
               <div className='itemIzquierdo'>
-                <label className='titleCrearLote'>Valor Unidad <br /><input ref={refValor_unidad} placeholder='$' id='valor_unidad' name='valor_unidad' onChange={changeInput} type="text" /> </label>
+                <label className='titleCrearLote'>Valor Unidad <span className='asterisco'>*</span><br /><input ref={refValor_unidad} placeholder='$' id='valor_unidad' name='valor_unidad' onChange={changeInput} type="text" /> </label>
                 {
                   input.valor_unidad && <p className='helps'>{new Intl.NumberFormat().format(input.valor_unidad)}$</p>
                 }

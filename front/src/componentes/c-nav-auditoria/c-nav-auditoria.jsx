@@ -8,7 +8,7 @@ import {
 } from '../../redux/actions/actions'
 
 
-const NavAuditoria = () => {
+const NavAuditoria = (props) => {
 
   const [inputOp, setInputOp] = useState('')
 
@@ -42,6 +42,7 @@ const NavAuditoria = () => {
       </div>
       <div className='containerButtons'>
         <div className='closeSession closeSessionAuditoria' onClick={closeSession}>Cerrar Sesion</div>
+        <div onClick={props.activarExport}>Exportar Excel</div>
       </div>
 
 
