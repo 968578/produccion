@@ -154,7 +154,6 @@ const FormLotes = () => {
           }
         }
         if (!filtroConfeccionista.includes(value)) {
-          console.log('hola')
           errorslocal.confeccionista = 'El confeccionista No existe'
         } else {
           delete errorslocal.confeccionista

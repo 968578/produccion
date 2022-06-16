@@ -327,9 +327,26 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           if (error) throw error
 
           if (results.length === 0) {
+
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Recepcion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -369,8 +386,24 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           } else if (results.length === 1 && results[0].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Preparacion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -415,8 +448,24 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           } else if (results.length === 2 && results[1].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Confeccion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -461,8 +510,24 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Lavanderia' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -513,8 +578,24 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           } else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryUpdateCicloTerminacion = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Terminacion', '${fechaCortaInicio}', '${op}');`
             conn.query(queryUpdateCicloTerminacion, (error, results) => {
@@ -537,8 +618,24 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           } else if (results.length === 4 && results[3].tipo === 'Lavanderia' && results[3].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Terminacion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -619,8 +716,24 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           } else if (results.length === 4 && results[3].tipo === 'Terminacion' && results[3].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
                                                   WHERE id_ciclo = ${results[3].id_ciclo};`
@@ -649,8 +762,24 @@ router.put('/update', verifyTokenGeneral, (req, res) => {
           } else if (results.length === 5 && results[4].tipo === 'Terminacion' && results[4].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryUpdateCicloConfeccion = `UPDATE ciclos SET fecha_final = '${fechaCortaInicio}' 
                                                   WHERE id_ciclo = ${results[4].id_ciclo};`
@@ -730,9 +859,26 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
           if (error) throw error
 
           if (results.length === 0) {
+
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Recepcion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -774,8 +920,24 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
           } else if (results.length === 1 && results[0].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Preparacion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -824,8 +986,24 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
           } else if (results.length === 2 && results[1].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Confeccion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -873,8 +1051,24 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
           else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Lavanderia' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {
@@ -927,8 +1121,24 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
           } else if (results.length === 3 && results[2].tipo === 'Confeccion' && results[2].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryUpdateCicloTerminacion = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Terminacion', '${fechaCortaInicio}', '${op}');`
             conn.query(queryUpdateCicloTerminacion, (error, results) => {
@@ -951,8 +1161,24 @@ router.put('/update-from-confeccionista', verifyTokenConfeccionista, (req, res) 
           } else if (results.length === 4 && results[3].tipo === 'Lavanderia' && results[3].fecha_final === null) {
 
             const today = new Date()
-            const fechaCortaInicio = `${today.getFullYear()}-${`${today.getMonth() + 1}`.length > 1 ? `${today.getMonth() + 1}`
-              : `0${today.getMonth() + 1}`}-${`${today.getDate()}`.length > 1 ? `${today.getDate()}` : `0${today.getDate()}`}`;
+  
+            const hoy = today.toLocaleString( 'en-US', {timeZone: 'America/Bogota'});
+            let dia 
+            let mes 
+            let year 
+            let cache ={}
+            for(let i = 0; i< hoy.length; i++){
+              if(hoy[i] === '/' && !cache.mes){
+                mes = `${hoy.slice(0,i)}`
+                mes = mes.length === 1 ? `0${mes}` : mes
+                cache ={...cache, mes: true}
+              }else if(hoy[i] === '/' && !cache.dia && cache.mes && i > 2){
+                dia = `${hoy.slice(i-2,i-1)}` === '/' ? `0${hoy.slice(i-1,i)}` : `${hoy.slice(i-2,i)}` 
+                year = `${hoy.slice(i+1, i+5)}` 
+              }
+            }
+            
+            const fechaCortaInicio = `${year}-${mes}-${dia}`
 
             const queryCiclos = `INSERT INTO ciclos (tipo, fecha_inicio, op) VALUES('Terminacion' , '${fechaCortaInicio}', '${op}');`
             conn.query(queryCiclos, (error, results) => {

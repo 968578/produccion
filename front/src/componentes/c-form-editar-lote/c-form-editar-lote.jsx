@@ -130,12 +130,11 @@ const EditarLote = (props) => {
 
       case 'confeccionista':
         for (let i = 0; i < value.length; i++) {
-          if (filtroLetra.indexOf(value[i]) === -1) {
-            return document.getElementById('estado').value = input.estado
+          if (filtroGeneral.indexOf(value[i]) === -1) {
+            return document.getElementById('confeccionista').value = input.confeccionista
           }
         }
         if (!filtroConfeccionista.includes(value)) {
-          console.log('hola')
           errorslocal.confeccionista = 'El confeccionista No existe'
         } else {
           delete errorslocal.confeccionista
@@ -292,7 +291,7 @@ const EditarLote = (props) => {
     }
   }, [props.active])
 
-
+  console.log(confeccionistas)
   return (
     <div>
       <AnimatePresence>
