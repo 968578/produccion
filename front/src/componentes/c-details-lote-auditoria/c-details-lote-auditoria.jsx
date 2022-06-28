@@ -133,7 +133,7 @@ const ComponentDetailsLoteAuditoria = (props) => {
                           new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
 
                         : dataLocal.ciclo?.length === 4 ? dataLocal.ciclo[3].tipo === 'Lavanderia' &&
-                          differenceInCalendarDays(Date.now(), new Date(dataLocal.ciclo[3].fecha_inicio).setMinutes(300))
+                          differenceInCalendarDays(Date.now(), new Date(dataLocal.ciclo[0].fecha_inicio).setMinutes(300))
 
                           || dataLocal?.ciclo[3].tipo === 'Terminacion' &&
                           differenceInCalendarDays((dataLocal.ciclo[3].fecha_final !== null ?

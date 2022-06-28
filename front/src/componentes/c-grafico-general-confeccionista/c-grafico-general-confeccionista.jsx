@@ -218,7 +218,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Corte' &&
                 <div key={i} className='colorDefault'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -228,7 +228,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Lote Integracion' &&
                 <div key={i} className='colorIntegracion'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -238,7 +238,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Para Asignar' &&
                 <div key={i} className='colorParaAsignar'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -248,7 +248,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Recepcion' &&
                 <div key={i} className='colorRecepcion'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -258,7 +258,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Preparacion' &&
                 <div key={i} className='colorPreparacion'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -268,7 +268,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Confeccion' &&
                 <div key={i} className='colorConfe'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -278,7 +278,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Lavanderia' &&
                 <div key={i} className='colorLavanderia'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -288,7 +288,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Terminacion' &&
                 <div key={i} className='colorTerminacion'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -298,7 +298,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Liberado' &&
                 <div key={i} className='colorLiberado'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>
@@ -308,7 +308,7 @@ const GraficoGeneralConfeccionista = (props) => {
               props.lotes.length && props.lotes.map((e, i) =>
                 e.estado === 'Paro' &&
                 <div key={i} className='colorParo'>
-                  <Link to={'/details-admin/' + e.op}>
+                  <Link to={'/details-confeccionista/' + e.op}>
                     {e.op}
                   </Link>
                 </div>

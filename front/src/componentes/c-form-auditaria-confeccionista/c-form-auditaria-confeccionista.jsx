@@ -2865,20 +2865,20 @@ const FormAuditoria = (props) => {
 
                 <div className="containerTwoInputs">
                   <div className="inputIzquierdo">
-                    <label className="titlesFormAuditoria" >Fecha Auditoria <br /> <input onChange={changeInput} type="date" name="fecha_auditoria" /></label>
+                    <label className="titlesFormAuditoria" >Fecha Auditoria <span className='asterisco'>*</span><br /> <input onChange={changeInput} type="date" name="fecha_auditoria" /></label>
                   </div>
                   <div>
-                    <label className="titlesFormAuditoria" >Auditor@ <br /> <input onChange={changeInput} type="text" name="auditor" id="auditor" /></label>
+                    <label className="titlesFormAuditoria" >Auditor@ <span className='asterisco'>*</span><br /> <input onChange={changeInput} type="text" name="auditor" id="auditor" /></label>
                   </div>
                 </div>
 
                 <div className="containerTwoInputs">
 
                   <div className="inputIzquierdo">
-                    <label className="titlesFormAuditoria" >Composicion <br /> <textarea className="composicionAuditoria" onChange={changeInput} type="text" name="composicion" /></label>
+                    <label className="titlesFormAuditoria" >Composicion <span className='asterisco'>*</span><br /> <textarea className="composicionAuditoria" onChange={changeInput} type="text" name="composicion" /></label>
                   </div>
                   <div>
-                    <label className="titlesFormAuditoria" >Tamaño de Muestra <br /> <input onChange={changeInput} type="text" name="unidades_muestra" id="unidades_muestra" /></label>
+                    <label className="titlesFormAuditoria" >Tamaño de Muestra <span className='asterisco'>*</span><br /> <input onChange={changeInput} type="text" name="unidades_muestra" id="unidades_muestra" /></label>
                   </div>
 
                 </div>
@@ -2886,7 +2886,7 @@ const FormAuditoria = (props) => {
                 <div className="containerTwoInputs">
 
                   <div className="inputIzquierdo">
-                    <label className="titlesFormAuditoria" >Muestra Fisica <br />
+                    <label className="titlesFormAuditoria" >Muestra Fisica <span className='asterisco'>*</span><br />
                       <select onChange={changeInput} name="muestra_fisica" >
                         <option value="">Escoge</option>
                         <option value="Si">Si</option>
@@ -2895,7 +2895,7 @@ const FormAuditoria = (props) => {
                     </label>
                   </div>
                   <div>
-                    <label className="titlesFormAuditoria" >Tipo Revision <br />
+                    <label className="titlesFormAuditoria" >Tipo Revision <span className='asterisco'>*</span><br />
                       <select onChange={changeInput} name="tipo_revision" >
                         <option value="">Escoge</option>
                         <option value="Premuestra">Premuestra</option>
@@ -2909,10 +2909,10 @@ const FormAuditoria = (props) => {
                 <div className="containerTwoInputs">
 
                   <div className="inputIzquierdo">
-                    <label className="titlesFormAuditoria" >Numero de Operarios<br /> <input onChange={changeInput} type="text" name="colaboradores_karibik" id="colaboradores_karibik" /></label>
+                    <label className="titlesFormAuditoria" >Numero de Operarios <span className='asterisco'>*</span><br /> <input onChange={changeInput} type="text" name="colaboradores_karibik" id="colaboradores_karibik" /></label>
                   </div>
                   <div>
-                    <label className="titlesFormAuditoria" >Aprobado<br />
+                    <label className="titlesFormAuditoria" >Aprobado <span className='asterisco'>*</span><br />
                       <select onChange={changeInput} name="aprobado" >
                         <option value="">Escoge</option>
                         <option value="Si">Si</option>
@@ -2932,7 +2932,7 @@ const FormAuditoria = (props) => {
                         <motion.div initial='hidden' animate='show' exit='hidden' variants={variantsNoconformidadesFaltantes} key={i}>
                           <div className="containerTwoInputs">
                             <div className="inputIzquierdo">
-                              <label className="titlesFormAuditoria" >Defecto en:<br />
+                              <label className="titlesFormAuditoria" >Defecto en: <span className='asterisco'>*</span><br />
                                 <select className="selectNoConformidades" onChange={changeInputNoconformidades} name={`defecto${i}`} >
                                   <option value="">Escoge Defecto</option>
                                   <option value="T001">T001 Tela con despistes, picas, rotos</option>
@@ -3095,7 +3095,7 @@ const FormAuditoria = (props) => {
                               </label>
                             </div>
                             <div>
-                              <label className="titlesFormAuditoria" >Cantidad<br /><input onChange={changeInputNoconformidades} type="text" name={`cantidad${i}`} id={`cantidadD${i}`} /></label>
+                              <label className="titlesFormAuditoria" >Cantidad <span className='asterisco'>*</span><br /><input onChange={changeInputNoconformidades} type="text" name={`cantidad${i}`} id={`cantidadD${i}`} /></label>
                             </div>
                           </div>
 
@@ -3128,7 +3128,7 @@ const FormAuditoria = (props) => {
                       countFaltantes.length > 0 && countFaltantes.map((e, i) =>
                         <motion.div initial='hidden' animate='show' exit='hidden' variants={variantsNoconformidadesFaltantes} key={i} className="containerTwoInputs">
                           <div className="inputIzquierdo">
-                            <label className="titlesFormAuditoria" >Talla<br />
+                            <label className="titlesFormAuditoria" >Talla <span className='asterisco'>*</span><br />
                               <select name={`talla${i}`} onChange={changeInputFaltantes}>
                                 <option value="">Escoge Talla</option>
                                 <option value="4">4</option>
@@ -3146,7 +3146,7 @@ const FormAuditoria = (props) => {
                             </label>
                           </div>
                           <div>
-                            <label className="titlesFormAuditoria" >Cantidad <br /> <input id={`cantidadF${i}`} name={`cantidad${i}`} onChange={changeInputFaltantes} type="text" /></label>
+                            <label className="titlesFormAuditoria" >Cantidad <span className='asterisco'>*</span><br /> <input id={`cantidadF${i}`} name={`cantidad${i}`} onChange={changeInputFaltantes} type="text" /></label>
                           </div>
                         </motion.div>
                       )
